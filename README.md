@@ -4,11 +4,13 @@
 
 ## 🧐 这是什么？
 
-就像给AI开发者配了一个"云开发小助手"：  
+它是 AI IDE 和编程助手的的**最佳排档**
+
 当你在**Cursor/GitHub Copilot/WinSurf/CodeBuddy**等AI编程工具里写代码时，它能自动帮你：  
-1️⃣ **生成**可直接部署的前后端应用+小程序  
-2️⃣ **一键发布**到腾讯云开发 CloudBase 
-3️⃣ **智能修复**线上问题
+- 1️⃣ **生成**可直接部署的前后端应用+小程序  
+- 2️⃣ **一键发布**到腾讯云开发 CloudBase 
+- 3️⃣ **智能修复**线上问题
+
 全程不用碰服务器，像搭积木一样简单！
 
 ## 🚀 三大核心能力
@@ -40,17 +42,29 @@ graph TD
 
 **案例1：快速上线双人在线对战五子棋网站**
 
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-004.png)
+
 1. 在Cursor输入："做个双人在线对战五子棋网站，支持联机对战"
 2. AI自动生成：web 应用 + 云开发数据库API + 云函数+ websocket 实时推送
 3. 自动部署前后端资源，并得到现网可访问地址
 4. 用户可持续和 AI 互动不断增加功能，并部署
 5. 遇到问题后，可以把问题交给 AI 让 AI 查询云函数日志并解决，然后进行部署
 
+### 开发示例
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-001.png)
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-002.png)
+
+### 应用体验
+
 👉 点击访问 [生成产物访问地址](https://cloud1-5g39elugeec5ba0f-1300855855.tcloudbaseapp.com/gobang/#/)
 
-![五子棋案例截图](https://raw.githubusercontent.com/binggg/storage/main/cdn202505161520075.png)
+
 
 **案例2：快速上线一个有 AI功能的宠物小程序**
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-005.png)
 
 1. 在Cursor输入："开发一个宠物小精灵的养成小程序游戏，使用 AI 来增强角色的互动等玩法  
 支持每个用户领养自己的小精灵"
@@ -59,15 +73,26 @@ graph TD
 4. 导入到微信 IDE 后，发布小程序即可获得生产环境小程序
 5. 用户可持续修改和完善新功能
 
-![宠物小程序截图1](https://raw.githubusercontent.com/binggg/storage/main/cdn202505161527217.png)
+### 开发示例
 
-![宠物小程序截图2](https://raw.githubusercontent.com/binggg/storage/main/cdn202505161527726.png)
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-003.png)
 
-![宠物小程序截图3](https://raw.githubusercontent.com/binggg/storage/main/cdn202505161528265.png)
+
+
+### 应用体验
 
 小程序体验二维码
 
-![小程序二维码](https://raw.githubusercontent.com/binggg/storage/main/cdn202505161529215.png)
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-008.png)
+
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-006.png)
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-007.png)
+
+
+
+
 
 **案例3：智能监控修复**  
 当用户反馈页面报错时：
@@ -76,9 +101,13 @@ graph TD
 2. 自动生成补丁代码并重新部署
 3. 问题解决无需人工介入
 
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-009.png)
+
 ## 🎯 为什么选择我们？
 
 √ **国内速度最快** 腾讯云国内节点，部署比海外平台快3-5倍  
+√ **稳定可靠** 国内累计有 330万开发者使用云开发开发小程序和其他应用
 √ **全家桶支持** 唯一同时支持Web+小程序+API的一站式平台  
 √ **AI深度优化** 专为AI开发者打造全栈应用代码生成规则
 
@@ -127,6 +156,11 @@ graph TD
 ### 3. 输入需求并生成
 
 对AI说："我要做一个______"
+
+例如
+```
+做个双人在线对战五子棋网站，支持联机对战
+```
 
 等着收你的线上应用链接或者小程序吧！
 
