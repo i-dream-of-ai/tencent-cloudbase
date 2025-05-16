@@ -1,0 +1,31 @@
+{
+  "name": "@cloudbase/cloudbase-mcp",
+  "version": "1.0.9",
+  "description": "腾讯云开发 MCP Server，支持静态托管/环境查询/",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "cloudbase-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc && chmod 755 dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@cloudbase/manager-node": "^4.2.10",
+    "@modelcontextprotocol/sdk": "^1.9.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  }
+}
