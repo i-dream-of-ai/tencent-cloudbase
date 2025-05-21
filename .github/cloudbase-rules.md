@@ -1,9 +1,4 @@
 ---
-description: 
-globs: 
-alwaysApply: false
----
----
 description: web 全栈项目和微信小程序开发
 globs: 
 alwaysApply: true
