@@ -1,14 +1,6 @@
 import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import CloudBase from "@cloudbase/manager-node";
-
-// 初始化CloudBase
-const cloudbase = new CloudBase({
-  secretId: process.env.TENCENTCLOUD_SECRETID,
-  secretKey: process.env.TENCENTCLOUD_SECRETKEY,
-  envId: process.env.CLOUDBASE_ENV_ID,
-  token: process.env.TENCENTCLOUD_SESSIONTOKEN
-});
+import { getCloudBaseManager } from '../cloudbase-manager.js'
 
 export function registerStorageTools(server: McpServer) {
   // uploadFile - 上传文件到云存储
@@ -20,6 +12,7 @@ export function registerStorageTools(server: McpServer) {
       cloudPath: z.string().describe("云端文件路径，例如 files/data.txt"),
     },
     async ({ localPath, cloudPath }) => {
+      const cloudbase = await getCloudBaseManager()
       // 上传文件
       await cloudbase.storage.uploadFile({
         localPath,

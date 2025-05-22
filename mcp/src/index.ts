@@ -24,8 +24,8 @@ const server = new McpServer({
 // Register environment management tools
 registerEnvTools(server);
 
-// Register file management tools
-registerFileTools(server);
+// // Register file management tools
+// registerFileTools(server);
 
 // Register database management tools
 registerDatabaseTools(server);

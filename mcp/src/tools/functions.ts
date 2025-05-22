@@ -1,14 +1,6 @@
 import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import CloudBase from "@cloudbase/manager-node";
-
-// 初始化CloudBase
-const cloudbase = new CloudBase({
-  secretId: process.env.TENCENTCLOUD_SECRETID,
-  secretKey: process.env.TENCENTCLOUD_SECRETKEY,
-  envId: process.env.CLOUDBASE_ENV_ID,
-  token: process.env.TENCENTCLOUD_SESSIONTOKEN
-});
+import { getCloudBaseManager } from '../cloudbase-manager.js'
 
 export function registerFunctionTools(server: McpServer) {
   // getFunctionList - 获取云函数列表(推荐)
@@ -20,6 +12,7 @@ export function registerFunctionTools(server: McpServer) {
       offset: z.number().optional().describe("偏移")
     },
     async ({ limit, offset }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.functions.getFunctionList(limit, offset);
       return {
         content: [
@@ -66,6 +59,7 @@ export function registerFunctionTools(server: McpServer) {
       codeSecret: z.string().optional().describe("代码保护密钥，一般无需配置")
     },
     async ({ func, functionRootPath, force, base64Code, codeSecret }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.functions.createFunction({
         func,
         functionRootPath,
@@ -97,6 +91,7 @@ export function registerFunctionTools(server: McpServer) {
       codeSecret: z.string().optional().describe("代码保护密钥，一般无需配置")
     },
     async ({ func, functionRootPath, base64Code, codeSecret }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.functions.updateFunctionCode({
         func,
         functionRootPath,
@@ -131,6 +126,7 @@ export function registerFunctionTools(server: McpServer) {
       }).describe("函数配置")
     },
     async ({ funcParam }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.functions.updateFunctionConfig(funcParam);
       return {
         content: [
@@ -152,6 +148,7 @@ export function registerFunctionTools(server: McpServer) {
       codeSecret: z.string().optional().describe("代码保护密钥")
     },
     async ({ name, codeSecret }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.functions.getFunctionDetail(name, codeSecret);
       return {
         content: [
@@ -173,6 +170,7 @@ export function registerFunctionTools(server: McpServer) {
       params: z.record(z.any()).optional().describe("调用参数")
     },
     async ({ name, params }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.functions.invokeFunction(name, params);
       return {
         content: [
@@ -202,6 +200,7 @@ export function registerFunctionTools(server: McpServer) {
       }).describe("日志查询选项")
     },
     async ({ options }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.functions.getFunctionLogs(options);
       return {
         content: [
@@ -227,6 +226,7 @@ export function registerFunctionTools(server: McpServer) {
       })).describe("触发器配置数组")
     },
     async ({ name, triggers }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.functions.createFunctionTriggers(name, triggers);
       return {
         content: [
@@ -248,6 +248,7 @@ export function registerFunctionTools(server: McpServer) {
       triggerName: z.string().describe("触发器名称")
     },
     async ({ name, triggerName }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.functions.deleteFunctionTrigger(name, triggerName);
       return {
         content: [
@@ -276,6 +277,7 @@ export function registerFunctionTools(server: McpServer) {
   //     }).describe("Layer配置")
   //   },
   //   async ({ options }) => {
+  //     const cloudbase = await getCloudBaseManager()
   //     const result = await cloudbase.functions.createLayer(options);
   //     return {
   //       content: [
@@ -301,6 +303,7 @@ export function registerFunctionTools(server: McpServer) {
   //     }).optional().describe("查询选项")
   //   },
   //   async ({ options }) => {
+  //     const cloudbase = await getCloudBaseManager()
   //     const result = await cloudbase.functions.listLayers(options || {});
   //     return {
   //       content: [
@@ -324,6 +327,7 @@ export function registerFunctionTools(server: McpServer) {
   //     }).describe("查询选项")
   //   },
   //   async ({ options }) => {
+  //     const cloudbase = await getCloudBaseManager()
   //     const result = await cloudbase.functions.getLayerVersion(options);
   //     return {
   //       content: [
@@ -348,6 +352,7 @@ export function registerFunctionTools(server: McpServer) {
   //     }).describe("发布选项")
   //   },
   //   async ({ options }) => {
+  //     const cloudbase = await getCloudBaseManager()
   //     const result = await cloudbase.functions.publishVersion(options);
   //     return {
   //       content: [
@@ -374,6 +379,7 @@ export function registerFunctionTools(server: McpServer) {
   //     }).describe("查询选项")
   //   },
   //   async ({ options }) => {
+  //     const cloudbase = await getCloudBaseManager()
   //     const result = await cloudbase.functions.listVersionByFunction(options);
   //     return {
   //       content: [
@@ -408,6 +414,7 @@ export function registerFunctionTools(server: McpServer) {
   //     }).describe("别名配置")
   //   },
   //   async ({ options }) => {
+  //     const cloudbase = await getCloudBaseManager()
   //     const result = await cloudbase.functions.updateFunctionAliasConfig(options);
   //     return {
   //       content: [
@@ -431,6 +438,7 @@ export function registerFunctionTools(server: McpServer) {
   //     }).describe("查询选项")
   //   },
   //   async ({ options }) => {
+  //     const cloudbase = await getCloudBaseManager()
   //     const result = await cloudbase.functions.getFunctionAlias(options);
   //     return {
   //       content: [

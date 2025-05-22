@@ -4,6 +4,7 @@ import * as fs from "fs/promises";
 import * as path from "path";
 import * as os from "os";
 import * as crypto from "crypto";
+import { getCloudBaseManager } from '../cloudbase-manager.js'
 
 // 常量定义
 const MAX_FILE_SIZE = 100 * 1024; // 100KB in bytes

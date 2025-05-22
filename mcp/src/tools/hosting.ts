@@ -1,14 +1,6 @@
 import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import CloudBase from "@cloudbase/manager-node";
-
-// 初始化CloudBase
-const cloudbase = new CloudBase({
-  secretId: process.env.TENCENTCLOUD_SECRETID,
-  secretKey: process.env.TENCENTCLOUD_SECRETKEY,
-  envId: process.env.CLOUDBASE_ENV_ID,
-  token: process.env.TENCENTCLOUD_SESSIONTOKEN
-});
+import { getCloudBaseManager } from '../cloudbase-manager.js'
 
 // 定义扩展的EnvInfo接口，包含StaticStorages属性
 interface ExtendedEnvInfo {
@@ -37,6 +29,7 @@ export function registerHostingTools(server: McpServer) {
       ignore: z.union([z.string(), z.array(z.string())]).optional().describe("忽略文件模式")
     },
     async ({ localPath, cloudPath, files, ignore }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.uploadFiles({
         localPath,
         cloudPath,
@@ -77,6 +70,7 @@ export function registerHostingTools(server: McpServer) {
     "获取静态网站托管的文件列表",
     {},
     async () => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.listFiles();
       return {
         content: [
@@ -98,6 +92,7 @@ export function registerHostingTools(server: McpServer) {
       isDir: z.boolean().default(false).describe("是否为文件夹")
     },
     async ({ cloudPath, isDir }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.deleteFiles({
         cloudPath,
         isDir
@@ -123,6 +118,7 @@ export function registerHostingTools(server: McpServer) {
       maxKeys: z.number().optional().describe("单次返回最大条目数")
     },
     async ({ prefix, marker, maxKeys }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.findFiles({
         prefix,
         marker,
@@ -154,6 +150,7 @@ export function registerHostingTools(server: McpServer) {
   //     })).optional().describe("重定向规则")
   //   },
   //   async ({ indexDocument, errorDocument, routingRules }) => {
+  //     const cloudbase = await getCloudBaseManager()
   //     const result = await cloudbase.hosting.setWebsiteDocument({
   //       indexDocument,
   //       errorDocument,
@@ -179,6 +176,7 @@ export function registerHostingTools(server: McpServer) {
       certId: z.string().describe("证书ID")
     },
     async ({ domain, certId }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.CreateHostingDomain({
         domain,
         certId
@@ -202,6 +200,7 @@ export function registerHostingTools(server: McpServer) {
       domain: z.string().describe("自定义域名")
     },
     async ({ domain }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.deleteHostingDomain({
         domain
       });
@@ -222,6 +221,7 @@ export function registerHostingTools(server: McpServer) {
     "获取静态网站配置",
     {},
     async () => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.getWebsiteConfig();
       return {
         content: [
@@ -242,6 +242,7 @@ export function registerHostingTools(server: McpServer) {
       domains: z.array(z.string()).describe("域名列表")
     },
     async ({ domains }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.tcbCheckResource({
         domains
       });
@@ -289,6 +290,7 @@ export function registerHostingTools(server: McpServer) {
       }).describe("域名配置")
     },
     async ({ domain, domainId, domainConfig }) => {
+      const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.tcbModifyAttribute({
         domain,
         domainId,

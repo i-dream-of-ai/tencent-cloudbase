@@ -10,6 +10,7 @@ import * as http from "http";
 import { URL } from "url";
 import * as net from "net";
 import * as dns from "dns";
+import { getCloudBaseManager } from '../cloudbase-manager.js'
 
 // 常量定义
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
