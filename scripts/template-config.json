@@ -1,0 +1,21 @@
+{
+  "description": "awsome-cloudbase-examples 项目模板路径配置",
+  "version": "1.0.0",
+  "templates": [
+    "web/cloudbase-react-template"
+  ],
+  "excludePatterns": [
+    ".git",
+    "node_modules",
+    ".DS_Store",
+    "*.log",
+    ".env",
+    ".env.local"
+  ],
+  "syncConfig": {
+    "createBackup": false,
+    "overwrite": true,
+    "autoCommit": true,
+    "commitMessage": "chore: sync config and rules from cloudbase-turbo-deploy"
+  }
+} 
