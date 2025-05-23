@@ -219,8 +219,6 @@ AI 会自动：
 
 ### 案例1：双人在线对战五子棋
 
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-004.png)
-
 **开发过程：**
 1. 输入需求："做个双人在线对战五子棋网站，支持联机对战"
 2. AI 生成：Web 应用 + 云数据库 + WebSocket 云函数
@@ -228,27 +226,80 @@ AI 会自动：
 
 👉 **体验地址：** [五子棋游戏](https://cloud1-5g39elugeec5ba0f-1300855855.tcloudbaseapp.com/gobang/#/)
 
-### 案例2：AI 宠物养成小程序
+<details>
+<summary>📸 查看开发截图</summary>
 
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-005.png)
+| 开发过程 | 最终效果 |
+|---------|---------|
+| <img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-001.png" width="400" alt="开发过程截图1"> | <img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-004.png" width="400" alt="五子棋游戏效果"> |
+| <img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-002.png" width="400" alt="开发过程截图2"> | 支持双人在线对战<br>实时棋局同步 |
+
+</details>
+
+### 案例2：AI 宠物养成小程序
 
 **开发过程：**
 1. 输入："开发一个宠物小精灵养成小程序，使用 AI 增强互动"
 2. AI 生成：小程序 + 云数据库 + AI 云函数
 3. 导入微信开发者工具即可发布
 
-👉 **小程序体验码：**
+<details>
+<summary>📸 查看开发截图与小程序预览</summary>
 
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-008.png)
+<table>
+<tr>
+<td width="50%">
+<b>🖥️ 开发截图</b><br>
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-005.png" width="100%" alt="AI宠物小程序开发截图">
+<br>
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-003.png" width="100%" alt="小程序开发过程">
+</td>
+<td width="50%">
+<b>📱 小程序预览</b><br>
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-006.png" width="200" alt="小程序界面1">
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-007.png" width="200" alt="小程序界面2">
+<br><br>
+<b>📲 体验二维码</b><br>
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-008.png" width="150" alt="小程序体验二维码">
+</td>
+</tr>
+</table>
+
+</details>
 
 ### 案例3：智能问题诊断
-
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-009.png)
 
 当应用出现问题时：
 1. AI 自动查看云函数日志
 2. 分析错误原因并生成修复代码  
 3. 自动重新部署
+
+<details>
+<summary>📸 查看智能诊断过程</summary>
+
+<div align="center">
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-009.png" width="600" alt="智能问题诊断过程">
+<br>
+<i>AI 自动分析日志并生成修复方案</i>
+</div>
+
+</details>
+
+---
+
+### 🎨 更多案例预览
+
+<details>
+<summary>点击查看更多项目案例</summary>
+
+| 项目类型 | 预览 | 特性 |
+|---------|------|------|
+| **电商小程序** | 🛒 商品展示、购物车、支付 | 云数据库 + 云函数 + 支付接口 |
+| **内容管理系统** | 📝 文章发布、用户管理 | 权限控制 + 富文本编辑 |
+| **实时聊天应用** | 💬 群聊、私聊、表情包 | WebSocket + 云存储 |
+| **数据可视化** | 📊 图表展示、实时更新 | 云函数 + 第三方图表库 |
+
+</details>
 
 ## 🌟 为什么选择 CloudBase？
 
