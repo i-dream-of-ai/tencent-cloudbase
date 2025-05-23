@@ -1,16 +1,17 @@
 import CloudBase from "@cloudbase/manager-node";
-import { getCreatial } from './auth.js'
+import { getLoginState } from './auth.js'
 
 export async function getCloudBaseManager() {
-    const loginState = await getCreatial()
+    const loginState = await getLoginState()
     const {
         envId,
         secretId,
         secretKey,
         token
     } = loginState
+
     const cloudbase = new CloudBase({
-        envId,
+        envId: process.env.CLOUDBASE_ENV_ID || envId,
         secretId,
         secretKey,
         token

@@ -3,7 +3,7 @@ import  { AuthSupevisor } from  '@cloudbase/toolbox'
 const auth = AuthSupevisor.getInstance({
 })
 
-export async function getCreatial() {
+export async function getLoginState() {
     const {
         TENCENTCLOUD_SECRETID,
         TENCENTCLOUD_SECRETKEY,
