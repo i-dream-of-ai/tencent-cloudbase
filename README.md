@@ -51,7 +51,10 @@ graph TD
 
 ### 1. 使用模板创建项目
 
-选择适合你的项目模板快速开始：
+建议选择适合你的项目模板快速开始：
+
+
+- [React Web应用](https://static.cloudbase.net/cloudbase-examples/web-cloudbase-react-template.zip)
 
 ### 2. 配置你的 AI IDE
 
@@ -59,7 +62,8 @@ graph TD
 <summary><strong>🔧 Cursor 配置</strong></summary>
 
 #### 步骤1：配置 MCP
-在 Cursor 设置中添加 MCP 配置：
+
+1. 请修改项目中的 `.cursor/mcp.json` ，填写你的云开发环境 ID
 
 ```json
 {
@@ -68,8 +72,6 @@ graph TD
       "command": "npx",
       "args": ["@cloudbase/cloudbase-mcp"],
       "env": {
-        "TENCENTCLOUD_SECRETID": "你的腾讯云SecretId",
-        "TENCENTCLOUD_SECRETKEY": "你的腾讯云SecretKey", 
         "CLOUDBASE_ENV_ID": "你的云开发环境ID"
       }
     }
@@ -77,7 +79,12 @@ graph TD
 }
 ```
 
+2. 启用云开发 MCP Server
+
+点击 Cursor 客户端右上角的 ⚙️ 图标，点击进入之后，选择“MCP”，在 MCP Server 页面，找到 cloudbase 右边的开关按钮，点击启用
+
 #### 步骤2：添加 AI 规则
+
 模板中已包含 `.cursor/rules/` 目录，AI 会自动识别云开发最佳实践。
 
 </details>
@@ -86,7 +93,8 @@ graph TD
 <summary><strong>🌊 WindSurf 配置</strong></summary>
 
 #### 步骤1：配置 MCP
-在 WindSurf 设置中添加：
+
+点击 windsurf 的 Plugins icon，点击“View raw config”，在其中加入 clodubase-mcp，同时设置环境 id
 
 ```json
 {
@@ -95,8 +103,6 @@ graph TD
       "command": "npx",
       "args": ["@cloudbase/cloudbase-mcp"],
       "env": {
-        "TENCENTCLOUD_SECRETID": "你的腾讯云SecretId",
-        "TENCENTCLOUD_SECRETKEY": "你的腾讯云SecretKey",
         "CLOUDBASE_ENV_ID": "你的云开发环境ID"
       }
     }
@@ -105,6 +111,7 @@ graph TD
 ```
 
 #### 步骤2：AI 规则配置
+
 模板中的 `.windsurf/` 目录包含专为 WindSurf 优化的配置。
 
 </details>
@@ -149,9 +156,8 @@ CodeBuddy 需要手动添加规则文件：
 <summary><strong>🐙 GitHub Copilot 配置</strong></summary>
 
 #### GitHub Copilot Chat 配置
-模板中的 `.github/` 目录包含 Copilot 优化配置。
 
-> 注意：GitHub Copilot 目前不支持 MCP，部分自动部署功能需要手动执行。
+模板中的 `.github/` 目录包含 Copilot 优化配置。
 
 </details>
 
@@ -166,8 +172,6 @@ CodeBuddy 需要手动添加规则文件：
       "command": "npx",
       "args": ["@cloudbase/cloudbase-mcp"], 
       "env": {
-        "TENCENTCLOUD_SECRETID": "你的腾讯云SecretId",
-        "TENCENTCLOUD_SECRETKEY": "你的腾讯云SecretKey",
         "CLOUDBASE_ENV_ID": "你的云开发环境ID"  
       }
     }
