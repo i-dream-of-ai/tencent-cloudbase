@@ -1,170 +1,284 @@
-# 🌟 CloudBase TurboDeploy AI开发套件
+![](https://tcb-advanced-a656fc-1257967285.tcloudbaseapp.com/mcp/mcp-github-banner.png)
+
+# 🌟 CloudBase AI-Deploy MCP
 
 **——用AI说话，10分钟搞定全栈应用！**
 
-## 🧐 这是什么？
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp.svg)](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp)
 
-它是 AI IDE 和编程助手的的**最佳排档**
+当你在**Cursor/ VSCode GitHub Copilot/WinSurf/CodeBuddy**等AI编程工具里写代码时，它能自动帮你生成可直接部署的前后端应用+小程序，并一键发布到腾讯云开发 CloudBase。
 
-当你在**Cursor/GitHub Copilot/WinSurf/CodeBuddy**等AI编程工具里写代码时，它能自动帮你：  
-- 1️⃣ **生成**可直接部署的前后端应用+小程序  
-- 2️⃣ **一键发布**到腾讯云开发 CloudBase 
-- 3️⃣ **智能修复**线上问题
+## 🚀 快速开始
 
-全程不用碰服务器，像搭积木一样简单！
+### 1. 使用模板创建项目
 
-## 🚀 三大核心能力
+选择适合你的项目模板快速开始：
 
-| 模块                   | 功能                  | 小白理解                      |
-| --------------------- | ------------------- | ------------------------- |
-| **云开发 CloudBase AI规则** | 为Cursor等IDE定制代码生成规则 | 教AI按腾讯云开发 CloudBase的标准写代码 |
-| **云开发 CloudBaseMCP**  | 自动部署/监控/管理资源        | 你的云端"自动驾驶系统"              |
-| **云开发 CloudBase 平台** | 前后端+数据库一体化托管        | 全栈应用的"集装箱"                |
+```bash
+# Web 应用模板
+git clone https://github.com/TencentCloudBase/cloudbase-templates/web-starter
+cd web-starter
 
-## 🔄 工作流程图
+# 小程序模板  
+git clone https://github.com/TencentCloudBase/cloudbase-templates/miniprogram-starter
+cd miniprogram-starter
 
-```mermaid
-graph TD
-    A[用户] --> B{ Cursor等 AI IDE}
-    B -->|调用| C[云开发CloudBase AI规则库]
-    C --> D[前后端应用代码]
-    B -->|触发| E[云开发CloudBase MCP]
-    E --> F{自动检测}
-    F -->|正常| G[部署到 云开发CloudBase平台]
-    F -->|报错| H[返回日志给AI]
-    H --> I[AI修正代码]
-    I --> E
-    G --> J[在线全栈应用]
-    J --> K((小程序/Web/API))
+# 全栈模板
+git clone https://github.com/TencentCloudBase/cloudbase-templates/fullstack-starter  
+cd fullstack-starter
 ```
 
-## 💡 典型使用场景
+### 2. 配置你的 AI IDE
 
-**案例1：快速上线双人在线对战五子棋网站**
+<details>
+<summary><strong>🔧 Cursor 配置</strong></summary>
 
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-004.png)
+#### 步骤1：配置 MCP
+在 Cursor 设置中添加 MCP 配置：
 
-1. 在Cursor输入："做个双人在线对战五子棋网站，支持联机对战"
-2. AI自动生成：web 应用 + 云开发数据库API + 云函数+ websocket 实时推送
-3. 自动部署前后端资源，并得到现网可访问地址
-4. 用户可持续和 AI 互动不断增加功能，并部署
-5. 遇到问题后，可以把问题交给 AI 让 AI 查询云函数日志并解决，然后进行部署
-
-### 开发示例
-
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-001.png)
-
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-002.png)
-
-### 应用体验
-
-👉 点击访问 [生成产物访问地址](https://cloud1-5g39elugeec5ba0f-1300855855.tcloudbaseapp.com/gobang/#/)
-
-
-
-**案例2：快速上线一个有 AI功能的宠物小程序**
-
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-005.png)
-
-1. 在Cursor输入："开发一个宠物小精灵的养成小程序游戏，使用 AI 来增强角色的互动等玩法  
-支持每个用户领养自己的小精灵"
-2. AI自动生成：小程序 + 云开发数据库API + 云函数
-3. 自动部署云函数，数据库等云开发资源
-4. 导入到微信 IDE 后，发布小程序即可获得生产环境小程序
-5. 用户可持续修改和完善新功能
-
-### 开发示例
-
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-003.png)
-
-
-
-### 应用体验
-
-小程序体验二维码
-
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-008.png)
-
-
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-006.png)
-
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-007.png)
-
-
-
-
-
-**案例3：智能监控修复**  
-当用户反馈页面报错时：
-
-1. AI通过MCP查看云函数错误日志，或者查看数据库集合写入情况
-2. 自动生成补丁代码并重新部署
-3. 问题解决无需人工介入
-
-
-![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-009.png)
-
-## 🎯 为什么选择我们？
-
-√ **国内速度最快** 腾讯云国内节点，部署比海外平台快3-5倍  
-√ **稳定可靠** 国内累计有 330万开发者使用云开发开发小程序和其他应用
-√ **全家桶支持** 唯一同时支持Web+小程序+API的一站式平台  
-√ **AI深度优化** 专为AI开发者打造全栈应用代码生成规则
-
-## 🏁 使用指南
-
-### 1. 新建项目
-
-在本地创建一个空白项目，下载并集成云开发 CloudBase AI规则
-
-根据你使用的AI工具，将相应的规则目录复制到项目中：
-
-| AI工具 | 规则目录 | 使用方法 |
-|--------|---------|---------|
-| **Cursor** | `.cursor/rules/` | 复制到项目根目录 |
-| **WindSurf** | `.windsurf/` | 复制到项目根目录 |
-| **CLINE** | `.clinerules/` | 复制到项目根目录 |
-| **CodeBuddy** | `.common_rules/` | 复制到项目根目录，对话时需要 add 选中具体的规则 |
-| **Github Copilot** | `.github/` | 复制到项目根目录 |
-| **Trae** | `.trae/rules/` | 复制到项目根目录 |
-| 通用规则 | `.common_rules/` | 适用于所有支持规则的AI工具，不支持的情况下需要 add 选中具体的规则 |
-
-所有规则文件都包含相同的CloudBase开发指南，只是格式和位置根据不同AI工具而调整
-
-### 2. 配置云开发 CloudBase MCP
-
-在 Cursor 等支持 MCP 的 AI IDE 中，打开 MCP 配置，加入云开发的 MCP
-
-注意：需要先[开通云开发环境](https://docs.cloudbase.net/quick-start/create-env)
-
-```js
+```json
 {
   "mcpServers": {
     "cloudbase-mcp": {
       "command": "npx",
       "args": ["@cloudbase/cloudbase-mcp"],
       "env": {
-        "TENCENTCLOUD_SECRETID": "腾讯云 SecretId",
-        "TENCENTCLOUD_SECRETKEY": "腾讯云 SecretKey",
-        "CLOUDBASE_ENV_ID": "云开发环境 ID"
+        "TENCENTCLOUD_SECRETID": "你的腾讯云SecretId",
+        "TENCENTCLOUD_SECRETKEY": "你的腾讯云SecretKey", 
+        "CLOUDBASE_ENV_ID": "你的云开发环境ID"
       }
     }
   }
 }
 ```
 
-### 3. 输入需求并生成
+#### 步骤2：添加 AI 规则
+模板中已包含 `.cursor/rules/` 目录，AI 会自动识别云开发最佳实践。
 
-对AI说："我要做一个______"
+</details>
 
-例如
+<details>
+<summary><strong>🌊 WindSurf 配置</strong></summary>
+
+#### 步骤1：配置 MCP
+在 WindSurf 设置中添加：
+
+```json
+{
+  "mcpServers": {
+    "cloudbase-mcp": {
+      "command": "npx",
+      "args": ["@cloudbase/cloudbase-mcp"],
+      "env": {
+        "TENCENTCLOUD_SECRETID": "你的腾讯云SecretId",
+        "TENCENTCLOUD_SECRETKEY": "你的腾讯云SecretKey",
+        "CLOUDBASE_ENV_ID": "你的云开发环境ID"
+      }
+    }
+  }
+}
 ```
-做个双人在线对战五子棋网站，支持联机对战
+
+#### 步骤2：AI 规则配置
+模板中的 `.windsurf/` 目录包含专为 WindSurf 优化的配置。
+
+</details>
+
+<details>
+<summary><strong>🤖 CLINE 配置</strong></summary>
+
+#### MCP 配置
+```json
+{
+  "mcpServers": {
+    "cloudbase-mcp": {
+      "command": "npx", 
+      "args": ["@cloudbase/cloudbase-mcp"],
+      "env": {
+        "TENCENTCLOUD_SECRETID": "你的腾讯云SecretId",
+        "TENCENTCLOUD_SECRETKEY": "你的腾讯云SecretKey",
+        "CLOUDBASE_ENV_ID": "你的云开发环境ID"
+      }
+    }
+  }
+}
 ```
 
-等着收你的线上应用链接或者小程序吧！
+使用模板中的 `.clinerules/` 目录配置。
 
+</details>
+
+<details>
+<summary><strong>👥 CodeBuddy 配置</strong></summary>
+
+#### 配置说明
+CodeBuddy 需要手动添加规则文件：
+
+1. 使用模板中的 `.common_rules/` 目录
+2. 在对话时使用 `@` 选择相应的云开发规则
+3. MCP 配置同其他工具
+
+</details>
+
+<details>
+<summary><strong>🐙 GitHub Copilot 配置</strong></summary>
+
+#### GitHub Copilot Chat 配置
+模板中的 `.github/` 目录包含 Copilot 优化配置。
+
+> 注意：GitHub Copilot 目前不支持 MCP，部分自动部署功能需要手动执行。
+
+</details>
+
+<details>
+<summary><strong>🎯 Trae 配置</strong></summary>
+
+#### 配置步骤
+```json
+{
+  "mcpServers": {
+    "cloudbase-mcp": {
+      "command": "npx",
+      "args": ["@cloudbase/cloudbase-mcp"], 
+      "env": {
+        "TENCENTCLOUD_SECRETID": "你的腾讯云SecretId",
+        "TENCENTCLOUD_SECRETKEY": "你的腾讯云SecretKey",
+        "CLOUDBASE_ENV_ID": "你的云开发环境ID"  
+      }
+    }
+  }
+}
+```
+
+使用模板中的 `.trae/rules/` 配置。
+
+</details>
+
+### 3. 开始开发
+
+向 AI 描述你的需求：
+
+```
+做一个双人在线对战五子棋网站，支持联机对战
+```
+
+AI 会自动：
+- 📝 生成前后端代码  
+- 🚀 部署到云开发
+- 🔗 返回在线访问链接
+
+## ✨ 核心特性
+
+| 特性 | 说明 | 优势 |
+|------|------|------|
+| **🤖 AI 原生** | 专为 AI 编程工具设计的规则库 | 生成代码符合云开发最佳实践 |
+| **🚀 一键部署** | MCP 自动化部署到腾讯云 | 无需手动配置服务器 |
+| **📱 全端支持** | Web + 小程序 + API 一体化 | 一套代码多端运行 |
+| **🔧 智能修复** | AI 自动查看日志并修复问题 | 降低运维成本 |
+| **⚡ 极速体验** | 国内 CDN 加速 | 比海外平台快 3-5 倍 |
+
+## 📋 项目类型
+
+### Web 应用
+- ✅ Vue/React/原生 JS
+- ✅ 现代化 UI 组件
+- ✅ 响应式设计
+- ✅ PWA 支持
+
+### 微信小程序
+- ✅ 云开发一体化
+- ✅ 实时数据同步  
+- ✅ AI 能力集成
+- ✅ 丰富组件库
+
+### 云函数 API
+- ✅ Serverless 架构
+- ✅ 自动扩缩容
+- ✅ 多语言支持
+- ✅ 安全认证
+
+## 🎯 使用案例
+
+### 案例1：双人在线对战五子棋
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-004.png)
+
+**开发过程：**
+1. 输入需求："做个双人在线对战五子棋网站，支持联机对战"
+2. AI 生成：Web 应用 + 云数据库 + WebSocket 云函数
+3. 自动部署并获得访问链接
+
+👉 **体验地址：** [五子棋游戏](https://cloud1-5g39elugeec5ba0f-1300855855.tcloudbaseapp.com/gobang/#/)
+
+### 案例2：AI 宠物养成小程序
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-005.png)
+
+**开发过程：**
+1. 输入："开发一个宠物小精灵养成小程序，使用 AI 增强互动"
+2. AI 生成：小程序 + 云数据库 + AI 云函数
+3. 导入微信开发者工具即可发布
+
+👉 **小程序体验码：**
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-008.png)
+
+### 案例3：智能问题诊断
+
+![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-009.png)
+
+当应用出现问题时：
+1. AI 自动查看云函数日志
+2. 分析错误原因并生成修复代码  
+3. 自动重新部署
+
+## 🏗️ 架构图
+
+```mermaid
+graph TD
+    A[开发者] --> B[AI IDE]
+    B -->|使用| C[CloudBase AI 规则]
+    C --> D[生成代码]
+    B -->|调用| E[CloudBase MCP]
+    E --> F{检测部署}
+    F -->|成功| G[云开发平台]
+    F -->|失败| H[返回日志]
+    H --> I[AI 修复]
+    I --> E
+    G --> J[线上应用]
+    J --> K[Web/小程序/API]
+```
+
+## 🌟 为什么选择 CloudBase？
+
+- **🇨🇳 国内领先**：330万+开发者的选择
+- **⚡ 极速部署**：国内节点，速度比海外快3-5倍  
+- **🛡️ 稳定可靠**：腾讯云基础设施，99.95%可用性
+- **🔧 开发友好**：专为AI时代设计的全栈平台
+- **💰 成本优化**：按量付费，开发测试几乎免费
+
+## 📚 进阶文档
+
+- [云开发快速入门](https://docs.cloudbase.net/quick-start/)
+- [MCP 完整配置指南](https://github.com/TencentCloudBase/cloudbase-mcp)
+- [小程序开发最佳实践](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/)
+- [云函数开发指南](https://docs.cloudbase.net/cloud-function/)
+
+## 🤝 贡献指南
+
+欢迎提交 Issue 和 Pull Request！
+
+1. Fork 本仓库
+2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交你的改动 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 打开一个 Pull Request
 
 ## 📄 开源协议
 
-[MIT](LICENSE) 
+[MIT](LICENSE) © TencentCloudBase
+
+---
+
+⭐ 如果这个项目对你有帮助，请给我们一个 Star！ 
