@@ -8,8 +8,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp.svg)](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp)
-[![GitHub stars](https://img.shields.io/github/stars/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/network/members)
+[![GitHub stars](https://img.shields.io/github/stars/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social&v=1)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social&v=1)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/network/members)
 
 [![GitHub issues](https://img.shields.io/github/issues/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/pulls)
@@ -26,9 +26,9 @@
 |------|------|------|
 | **🤖 AI 原生** | 专为 AI 编程工具设计的规则库 | 生成代码符合云开发最佳实践 |
 | **🚀 一键部署** | MCP 自动化部署到腾讯云 | 无需手动配置服务器 |
-| **📱 全端支持** | Web + 小程序 + API 一体化 | 一套代码多端运行 |
+| **📱 全栈应用支持** | Web + 小程序 + 数据库 + 后端一体化 | 支持小程序/web 等多种应用形式,提供后端托管和数据库 |
 | **🔧 智能修复** | AI 自动查看日志并修复问题 | 降低运维成本 |
-| **⚡ 极速体验** | 国内 CDN 加速 | 比海外平台快 3-5 倍 |
+| **⚡ 极速体验** | 国内 CDN 加速 | 比海外平台访问速度更快 |
 
 ## 🏗️ 架构原理
 
@@ -52,20 +52,6 @@ graph TD
 ### 1. 使用模板创建项目
 
 选择适合你的项目模板快速开始：
-
-```bash
-# Web 应用模板
-git clone https://github.com/TencentCloudBase/cloudbase-templates/web-starter
-cd web-starter
-
-# 小程序模板  
-git clone https://github.com/TencentCloudBase/cloudbase-templates/miniprogram-starter
-cd miniprogram-starter
-
-# 全栈模板
-git clone https://github.com/TencentCloudBase/cloudbase-templates/fullstack-starter  
-cd fullstack-starter
-```
 
 ### 2. 配置你的 AI IDE
 
