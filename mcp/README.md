@@ -1,138 +1,308 @@
-# 云开发基础能力 MCP 接入
+<div align="center">
 
-支持通过 MCP 协议来管理云开发基础能力，包括云开发环境管理、静态网站部署，数据库集合管理、数据库文档操作等。
+![](https://tcb-advanced-a656fc-1257967285.tcloudbaseapp.com/mcp/mcp-github-banner.png)
 
-[前往云开发平台运行 MCP Server](https://tcb.cloud.tencent.com/dev#/ai?tab=mcp&p&mcp-template=mcp-tcb)
+# 🌟 CloudBase AI-Deploy MCP
+
+**——用AI说话，10分钟搞定全栈应用！**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp.svg)](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp)
+[![GitHub stars](https://img.shields.io/github/stars/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social&v=1)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social&v=1)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/network/members)
+
+[![GitHub issues](https://img.shields.io/github/issues/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/pulls)
+[![GitHub last commit](https://img.shields.io/github/last-commit/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/commits)
+[![GitHub contributors](https://img.shields.io/github/contributors/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/graphs/contributors)
+
+当你在**Cursor/ VSCode GitHub Copilot/WinSurf/CodeBuddy**等AI编程工具里写代码时，它能自动帮你生成可直接部署的前后端应用+小程序，并一键发布到腾讯云开发 CloudBase。
+
+</div> 
+
+## ✨ 核心特性
+
+| 特性 | 说明 | 优势 |
+|------|------|------|
+| **🤖 AI 原生** | 专为 AI 编程工具设计的规则库 | 生成代码符合云开发最佳实践 |
+| **🚀 一键部署** | MCP 自动化部署到腾讯云开发 CloudBase 平台 | Serverless 架构，无需购买服务器 |
+| **📱 全栈应用支持** | Web + 小程序 + 数据库 + 后端一体化 | 支持小程序/web 等多种应用形式,提供后端托管和数据库 |
+| **🔧 智能修复** | AI 自动查看日志并修复问题 | 降低运维成本 |
+| **⚡ 极速体验** | 国内 CDN 加速 | 比海外平台访问速度更快 |
+
+## 🏗️ 架构原理
+
+```mermaid
+graph TD
+    A[开发者] --> B[AI IDE]
+    B -->|使用| C[CloudBase AI 规则]
+    C --> D[生成代码]
+    B -->|调用| E[CloudBase MCP]
+    E --> F{检测部署}
+    F -->|成功| G[云开发平台]
+    F -->|失败| H[返回日志]
+    H --> I[AI 修复]
+    I --> E
+    G --> J[线上应用]
+    J --> K[Web/小程序/API]
+```
+
+## 🚀 快速开始
+
+### 1. 使用模板创建项目
+
+建议选择适合你的项目模板快速开始：
 
 
----
+- [React Web应用](https://static.cloudbase.net/cloudbase-examples/web-cloudbase-react-template.zip)
 
-## 功能特点
+### 2. 配置你的 AI IDE
 
-- **☁️ 云开发环境管理**：提供获取所有云开发环境信息、获取环境合法域名列表、添加和删除安全域名、获取和修改当前环境信息等功能。
-- **💻 数据库集合管理**：支持创建、检查存在、更新、获取详细信息、列出集合、检查索引存在、查询数据分布等数据库集合相关操作。
-- **📒 数据库文档操作**：可向集合中插入文档、查询文档、更新文档、删除文档。
-- **🌍 静态托管管理**：实现上传文件到静态网站托管、获取文件列表、删除文件或文件夹、搜索文件、绑定和解绑自定义域名、获取静态网站配置、检查域名配置、修改域名配置等功能。
-- **💻临时文件管理**：能在临时目录创建文件，支持文本内容或 base64 编码的二进制内容；读取临时目录中的文件，支持文本和二进制文件。
+<details>
+<summary><strong>🔧 Cursor 配置</strong></summary>
 
-## 使用示例
+#### 步骤1：配置 MCP
 
-![](https://tcb-advanced-a656fc-1257967285.tcloudbaseapp.com/resources/2025-04/lowcode-2256227)
+1. 请修改项目中的 `.cursor/mcp.json` ，填写你的云开发环境 ID
 
-## 使用说明
-
-### 远程 MCP
-
-本项目支持[一键部署到腾讯云开发平台](https://docs.cloudbase.net/ai/mcp/develop/host-mcp)，提供远程 SSE 访问
-
-[☁️ 前往云开发平台部署 MCP Server](https://tcb.cloud.tencent.com/dev#/ai?tab=mcp&p&mcp-template=mcp-alapi-cn)
-
-部署完毕之后，可参考页面中的使用 MCP 说明，使用远程 SSE 访问 MCP Server。
-
-### 本地 MCP
-
-在支持 MCP 的本地客户端运行时，也可以使用通过 `npx` 来调用 `cloudbase-mcp` 工具。
-
-```js
+```json
 {
   "mcpServers": {
     "cloudbase-mcp": {
       "command": "npx",
       "args": ["@cloudbase/cloudbase-mcp"],
       "env": {
-        "TENCENTCLOUD_SECRETID": "腾讯云 SecretId",
-        "TENCENTCLOUD_SECRETKEY": "腾讯云 SecretKey",
-        "TENCENTCLOUD_SESSIONTOKEN": "腾讯云临时密钥Token，如果使用临时密钥才需要传入",
-        "CLOUDBASE_ENV_ID": "云开发环境 ID"
+        "CLOUDBASE_ENV_ID": "你的云开发环境ID"
       }
     }
   }
 }
 ```
 
-## 环境变量
+2. 启用云开发 MCP Server
 
+点击 Cursor 客户端右上角的 ⚙️ 图标，点击进入之后，选择“MCP”，在 MCP Server 页面，找到 cloudbase 右边的开关按钮，点击启用
 
-- 需要将 `TENCENTCLOUD_SECRETID` 和 `TENCENTCLOUD_SECRETKEY`  / `TENCENTCLOUD_SESSIONTOKEN`配置为**您在云开发控制台获取的 SecretId 和 SecretKey**  （[获取腾讯云 API 密钥](https://console.cloud.tencent.com/cam/capi)）
-- 需要将 `CLOUDBASE_ENV_ID` 配置为**您在云开发控制台获取的环境 ID**, [获取云开发环境 ID](https://tcb.cloud.tencent.com/dev) 
+#### 步骤2：添加 AI 规则
 
+模板中已包含 `.cursor/rules/` 目录，AI 会自动识别云开发最佳实践。
+
+</details>
+
+<details>
+<summary><strong>🌊 WindSurf 配置</strong></summary>
+
+#### 步骤1：配置 MCP
+
+点击 windsurf 的 Plugins icon，点击“View raw config”，在其中加入 clodubase-mcp，同时设置环境 id
+
+```json
+{
+  "mcpServers": {
+    "cloudbase-mcp": {
+      "command": "npx",
+      "args": ["@cloudbase/cloudbase-mcp"],
+      "env": {
+        "CLOUDBASE_ENV_ID": "你的云开发环境ID"
+      }
+    }
+  }
+}
+```
+
+#### 步骤2：AI 规则配置
+
+模板中的 `.windsurf/` 目录包含专为 WindSurf 优化的配置。
+
+</details>
+
+<details>
+<summary><strong>🤖 CLINE 配置</strong></summary>
+
+#### MCP 配置
+```json
+{
+  "mcpServers": {
+    "cloudbase-mcp": {
+      "command": "npx", 
+      "args": ["@cloudbase/cloudbase-mcp"],
+      "env": {
+        "TENCENTCLOUD_SECRETID": "你的腾讯云SecretId",
+        "TENCENTCLOUD_SECRETKEY": "你的腾讯云SecretKey",
+        "CLOUDBASE_ENV_ID": "你的云开发环境ID"
+      }
+    }
+  }
+}
+```
+
+使用模板中的 `.clinerules/` 目录配置。
+
+</details>
+
+<details>
+<summary><strong>👥 CodeBuddy 配置</strong></summary>
+
+#### 配置说明
+CodeBuddy 需要手动添加规则文件：
+
+1. 使用模板中的 `.common_rules/` 目录
+2. 在对话时使用 `@` 选择相应的云开发规则
+3. MCP 配置同其他工具
+
+</details>
+
+<details>
+<summary><strong>🐙 GitHub Copilot 配置</strong></summary>
+
+#### GitHub Copilot Chat 配置
+
+模板中的 `.github/` 目录包含 Copilot 优化配置。
+
+</details>
+
+<details>
+<summary><strong>🎯 Trae 配置</strong></summary>
+
+#### 配置步骤
+```json
+{
+  "mcpServers": {
+    "cloudbase-mcp": {
+      "command": "npx",
+      "args": ["@cloudbase/cloudbase-mcp"], 
+      "env": {
+        "CLOUDBASE_ENV_ID": "你的云开发环境ID"  
+      }
+    }
+  }
+}
+```
+
+使用模板中的 `.trae/rules/` 配置。
+
+</details>
+
+### 3. 开始开发
+
+向 AI 描述你的需求：
+
+```
+做一个双人在线对战五子棋网站，支持联机对战
+```
+
+AI 会自动：
+- 📝 生成前后端代码  
+- 🚀 部署到云开发
+- 🔗 返回在线访问链接
+
+## 🎯 使用案例
+
+### 案例1：双人在线对战五子棋
+
+**开发过程：**
+1. 输入需求："做个双人在线对战五子棋网站，支持联机对战"
+2. AI 生成：Web 应用 + 云数据库 + WebSocket 云函数
+3. 自动部署并获得访问链接
+
+👉 **体验地址：** [五子棋游戏](https://cloud1-5g39elugeec5ba0f-1300855855.tcloudbaseapp.com/gobang/#/)
+
+<details>
+<summary>📸 查看开发截图</summary>
+
+| 开发过程 | 最终效果 |
+|---------|---------|
+| <img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-001.png" width="400" alt="开发过程截图1"> | <img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-004.png" width="400" alt="五子棋游戏效果"> |
+| <img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-002.png" width="400" alt="开发过程截图2"> | 支持双人在线对战<br>实时棋局同步 |
+
+</details>
+
+### 案例2：AI 宠物养成小程序
+
+**开发过程：**
+1. 输入："开发一个宠物小精灵养成小程序，使用 AI 增强互动"
+2. AI 生成：小程序 + 云数据库 + AI 云函数
+3. 导入微信开发者工具即可发布
+
+<details>
+<summary>📸 查看开发截图与小程序预览</summary>
+
+<table>
+<tr>
+<td width="50%">
+<b>🖥️ 开发截图</b><br>
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-005.png" width="100%" alt="AI宠物小程序开发截图">
+<br>
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-003.png" width="100%" alt="小程序开发过程">
+</td>
+<td width="50%">
+<b>📱 小程序预览</b><br>
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-006.png" width="200" alt="小程序界面1">
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-007.png" width="200" alt="小程序界面2">
+<br><br>
+<b>📲 体验二维码</b><br>
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-008.png" width="150" alt="小程序体验二维码">
+</td>
+</tr>
+</table>
+
+</details>
+
+### 案例3：智能问题诊断
+
+当应用出现问题时：
+1. AI 自动查看云函数日志
+2. 分析错误原因并生成修复代码  
+3. 自动重新部署
+
+<details>
+<summary>📸 查看智能诊断过程</summary>
+
+<div align="center">
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/turbo-deploy/turbo-deploy-009.png" width="600" alt="智能问题诊断过程">
+<br>
+<i>AI 自动分析日志并生成修复方案</i>
+</div>
+
+</details>
 
 ---
 
-## 🗺️ 功能清单
+### 🎨 更多案例预览
 
-### 云开发环境管理
+<details>
+<summary>点击查看更多项目案例</summary>
 
-| 工具标识                  | 功能描述                                  | 核心参数                                                                                     |
-|---------------------------|-----------------------------------------|---------------------------------------------------------------------------------------------|
-| `listEnvs`                | 获取所有云开发环境信息                    | 无                                                                                           |
-| `getEnvAuthDomains`       | 获取云开发环境的合法域名列表              | 无                                                                                           |
-| `createEnvDomain`         | 为云开发环境添加安全域名                  | `domains`（必填，安全域名数组）                                                             |
-| `deleteEnvDomain`         | 删除云开发环境的指定安全域名              | `domains`（必填，安全域名数组）                                                             |
-| `getEnvInfo`              | 获取当前云开发环境信息                    | 无                                                                                           |
-| `updateEnvInfo`           | 修改云开发环境别名                      | `alias`（必填，环境别名）                                                                   |
+| 项目类型 | 预览 | 特性 |
+|---------|------|------|
+| **电商小程序** | 🛒 商品展示、购物车、支付 | 云数据库 + 云函数 + 支付接口 |
+| **内容管理系统** | 📝 文章发布、用户管理 | 权限控制 + 富文本编辑 |
+| **实时聊天应用** | 💬 群聊、私聊、表情包 | WebSocket + 云存储 |
+| **数据可视化** | 📊 图表展示、实时更新 | 云函数 + 第三方图表库 |
 
+</details>
 
----
+## 🌟 为什么选择 CloudBase？
 
-### 数据库集合管理
+- **⚡ 极速部署**：国内节点,访问速度比海外更快
+- **🛡️ 稳定可靠**：330 万开发者选择的 Serverless 平台
+- **🔧 开发友好**：专为AI时代设计的全栈平台
+- **💰 成本优化**：Serverless 架构支持按量付费，新用户开发期间可以免费体验
 
-| 工具标识                  | 功能描述                                  | 核心参数                                                                                     |
-|---------------------------|-----------------------------------------|---------------------------------------------------------------------------------------------|
-| `createCollection`        | 创建一个新的云开发数据库集合              | `collectionName`（必填，集合名称）                                                          |
-| `checkCollectionExists`   | 检查云开发数据库集合是否存在              | `collectionName`（必填，集合名称）                                                          |
-| `updateCollection`        | 更新云开发数据库集合配置（创建或删除索引） | `collectionName`（必填，集合名称），`options`（必填，更新选项，支持创建和删除索引）         |
-| `describeCollection`      | 获取云开发数据库集合的详细信息            | `collectionName`（必填，集合名称）                                                          |
-| `listCollections`         | 获取云开发数据库集合列表                  | `offset`（选填，偏移量），`limit`（选填，返回数量限制）                                       |
-| `checkIndexExists`        | 检查索引是否存在                          | `collectionName`（必填，集合名称），`indexName`（必填，索引名称）                            |
-| `distribution`            | 查询数据库中集合的数据分布情况            | 无                                                                                           |
+## 🤝 贡献指南
 
----
+欢迎提交 Issue 和 Pull Request！
 
-### 数据库文档操作
+1. Fork 本仓库
+2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交你的改动 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 打开一个 Pull Request
 
-| 工具标识                  | 功能描述                                  | 核心参数                                                                                     |
-|---------------------------|-----------------------------------------|---------------------------------------------------------------------------------------------|
-| `insertDocuments`         | 向集合中插入一个或多个文档                | `collectionName`（必填，集合名称），`documents`（必填，要插入的文档数组，每个文档为 JSON 字符串） |
-| `queryDocuments`          | 查询集合中的文档                          | `collectionName`（必填，集合名称），`query`（选填，查询条件，JSON 字符串），`projection`（选填，返回字段投影，JSON 字符串），`sort`（选填，排序条件，JSON 字符串），`limit`（选填，返回数量限制），`offset`（选填，跳过的记录数） |
-| `updateDocuments`         | 更新集合中的文档                          | `collectionName`（必填，集合名称），`query`（必填，查询条件，JSON 字符串），`update`（必填，更新内容，JSON 字符串），`isMulti`（选填，是否更新多条记录），`upsert`（选填，是否在不存在时插入） |
-| `deleteDocuments`         | 删除集合中的文档                          | `collectionName`（必填，集合名称），`query`（必填，查询条件，JSON 字符串），`isMulti`（选填，是否删除多条记录） |
+## 📄 开源协议
+
+[MIT](LICENSE) © TencentCloudBase
 
 ---
 
-### 静态托管管理
-
-| 工具标识                  | 功能描述                                  | 核心参数                                                                                     |
-|---------------------------|-----------------------------------------|---------------------------------------------------------------------------------------------|
-| `uploadFiles`             | 上传文件到静态网站托管                    | `localPath`（选填，本地文件或文件夹路径），`cloudPath`（选填，云端文件或文件夹路径），`files`（选填，多文件上传配置），`ignore`（选填，忽略文件模式） |
-| `listFiles`               | 获取静态网站托管的文件列表                | 无                                                                                           |
-| `deleteFiles`             | 删除静态网站托管的文件或文件夹            | `cloudPath`（必填，云端文件或文件夹路径），`isDir`（选填，是否为文件夹，默认为 `false`）     |
-| `findFiles`               | 搜索静态网站托管的文件                    | `prefix`（必填，匹配前缀），`marker`（选填，起始对象键标记），`maxKeys`（选填，单次返回最大条目数） |
-| `createHostingDomain`     | 绑定自定义域名                            | `domain`（必填，自定义域名），`certId`（必填，证书 ID）                                       |
-| `deleteHostingDomain`     | 解绑自定义域名                            | `domain`（必填，自定义域名）                                                                 |
-| `getWebsiteConfig`        | 获取静态网站配置                          | 无                                                                                           |
-| `tcbCheckResource`        | 检查域名配置                              | `domains`（必填，域名列表）                                                                  |
-| `tcbModifyAttribute`      | 修改域名配置                              | `domain`（必填，域名），`domainId`（必填，域名 ID），`domainConfig`（必填，域名配置）         |
-
----
-
-### 临时文件管理
-
-| 工具标识                  | 功能描述                                  | 核心参数                                                                                     |
-|---------------------------|-----------------------------------------|---------------------------------------------------------------------------------------------|
-| `createTempFile`          | 在临时目录创建文件，支持文本内容或 base64 编码的二进制内容 | `content`（必填，文件内容，可以是普通文本或 base64 编码的二进制内容），`isBase64`（选填，是否为 base64 编码，默认为 `false`），`extension`（选填，文件扩展名，如 `.txt`, `.png` 等） |
-| `readTempFile`            | 读取临时目录中的文件，支持文本和二进制文件 | `filePath`（必填，文件路径），`asBase64`（选填，是否以 base64 格式返回内容，默认为 `false`） |
-
-
-
----
-
-## 🔌 使用方式
-
-- [在云开发 Agent 中使用](https://docs.cloudbase.net/ai/mcp/use/agent)
-- [在 MCP Host 中使用](https://docs.cloudbase.net/ai/mcp/use/mcp-host)
-- [通过 SDK 接入](https://docs.cloudbase.net/ai/mcp/use/sdk)
-
----
-
-[云开发 MCP 控制台](https://tcb.cloud.tencent.com/dev#/ai?tab=mcp)  
+⭐ 如果这个项目对你有帮助，请给我们一个 Star！ 
