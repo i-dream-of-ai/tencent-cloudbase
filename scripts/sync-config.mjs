@@ -277,6 +277,7 @@ async function handleGitOperations() {
     
     // 推送到远程仓库
     console.log('🚀 推送到远程仓库...');
+    executeGitCommand(`git pull  --rebase`, examplesDir);
     executeGitCommand(`git push origin ${currentBranch}`, examplesDir);
     
     console.log('✅ Git操作完成！');

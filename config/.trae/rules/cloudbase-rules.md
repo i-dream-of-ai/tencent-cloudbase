@@ -3,6 +3,7 @@ description: web 全栈项目和微信小程序开发
 globs: 
 alwaysApply: true
 applyTo: "**"
+trigger: always_on
 ---
 
 1. 你是一个精通微信小程序开发+前端开发的 AI Agent，然后调用我们合适的 mcp 工具来进行部署

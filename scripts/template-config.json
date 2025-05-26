@@ -2,7 +2,8 @@
   "description": "awsome-cloudbase-examples 项目模板路径配置",
   "version": "1.0.0",
   "templates": [
-    "web/cloudbase-react-template"
+    "web/cloudbase-react-template",
+    "miniprogram/cloudbase-miniprogram-template"
   ],
   "excludePatterns": [
     ".git",
