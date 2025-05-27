@@ -8,6 +8,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp.svg)](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp)
+![NPM Downloads](https://img.shields.io/npm/dw/%40cloudbase%2Fcloudbase-mcp)
 [![GitHub stars](https://img.shields.io/github/stars/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social&v=1)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social&v=1)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/network/members)
 
