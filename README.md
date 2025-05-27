@@ -51,10 +51,12 @@ graph TD
 
 ### 1. 使用模板创建项目
 
+以下模板已经内置了云开发面向 AI IDE 的规则配置
+
 建议选择适合你的项目模板快速开始：
 
-
-- [React Web应用](https://static.cloudbase.net/cloudbase-examples/web-cloudbase-react-template.zip)
+- React Web应用+云开发模板：[下载代码包](https://static.cloudbase.net/cloudbase-examples/web-cloudbase-react-template.zip) ｜ [开源代码地址](https://github.com/TencentCloudBase/awesome-cloudbase-examples/tree/master/web/cloudbase-react-template)
+- 小程序+云开发模板：[下载代码包](https://static.cloudbase.net/cloudbase-examples/miniprogram-cloudbase-miniprogram-template.zip) ｜ [开源代码地址](https://github.com/TencentCloudBase/awesome-cloudbase-examples/tree/master/miniprogram/cloudbase-miniprogram-template)
 
 ### 2. 配置你的 AI IDE
 
