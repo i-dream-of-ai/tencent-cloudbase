@@ -4,8 +4,7 @@
 ![](https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/mcp/cloudbase-ai-toolkit.png)
 
 
-# 🌟 CloudBase AI Toolkit-云开发 AI 工具包
-
+# 🌟 CloudBase AI ToolKit
 
 **通过AI提示词和MCP协议+云开发，让开发更智能、更高效**
 

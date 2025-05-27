@@ -21,3 +21,8 @@ export async function getLoginState() {
         return loginState
     }
 }
+
+export async function logout() {
+    const result = await auth.logout()
+    return result
+}

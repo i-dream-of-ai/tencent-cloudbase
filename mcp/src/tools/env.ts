@@ -1,8 +1,27 @@
 import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { getCloudBaseManager } from '../cloudbase-manager.js'
+import { logout } from '../auth.js'
 
 export function registerEnvTools(server: McpServer) {
+  // logout
+  server.tool(
+    "logout",
+    "登出当前云开发账户",
+    {},
+    async () => {
+      const result = await logout();
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2)
+          }
+        ]
+      };
+    }
+  );
+
   // listEnvs
   server.tool(
     "listEnvs",
