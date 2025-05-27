@@ -68,7 +68,9 @@ export function registerHostingTools(server: McpServer) {
   server.tool(
     "listFiles",
     "获取静态网站托管的文件列表",
-    {},
+    {
+      confirm: z.literal("yes").describe("确认操作")
+    },
     async () => {
       const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.listFiles();
@@ -219,7 +221,9 @@ export function registerHostingTools(server: McpServer) {
   server.tool(
     "getWebsiteConfig",
     "获取静态网站配置",
-    {},
+    {
+      confirm: z.literal("yes").describe("确认操作")
+    },
     async () => {
       const cloudbase = await getCloudBaseManager()
       const result = await cloudbase.hosting.getWebsiteConfig();
