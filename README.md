@@ -6,7 +6,11 @@
 
 # 🌟 CloudBase AI Toolkit-云开发 AI 工具包
 
-**——用AI说话，10分钟搞定全栈应用！**
+---
+
+**通过AI提示词和MCP协议+云开发，让开发更智能、更高效**
+
+---
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp.svg)](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp)
@@ -20,6 +24,19 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/TencentCloudBase/CloudBase-AI-ToolKit)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/graphs/contributors)
 
 当你在**Cursor/ VSCode GitHub Copilot/WinSurf/CodeBuddy**等AI编程工具里写代码时，它能自动帮你生成可直接部署的前后端应用+小程序，并一键发布到腾讯云开发 CloudBase。
+
+
+### 🚀 三大核心能力
+
+- **🤖 AI智能开发**: AI自动生成代码和架构设计
+- **☁️ 云开发集成**: 一键接入数据库、云函数、静态托管
+- **⚡ 快速部署**: 几分钟内完成全栈应用上线
+
+### 🛠️ 支持平台
+
+- **Web应用**: 现代化前端 + 静态托管
+- **微信小程序**: 云开发小程序解决方案  
+- **后端服务**: 云数据库 + 无服务器函数+云托管
 
 </div> 
 
