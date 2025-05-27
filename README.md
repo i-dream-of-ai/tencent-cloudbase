@@ -2,20 +2,20 @@
 
 ![](https://tcb-advanced-a656fc-1257967285.tcloudbaseapp.com/mcp/mcp-github-banner.png)
 
-# 🌟 CloudBase AI-Deploy MCP
+# 🌟 CloudBase AI Toolkit-云开发 AI 工具包
 
 **——用AI说话，10分钟搞定全栈应用！**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp.svg)](https://badge.fury.io/js/%40cloudbase%2Fcloudbase-mcp)
 ![NPM Downloads](https://img.shields.io/npm/dw/%40cloudbase%2Fcloudbase-mcp)
-[![GitHub stars](https://img.shields.io/github/stars/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social&v=1)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/TencentCloudBase/cloudbase-ai-deploy-mcp?style=social&v=1)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/network/members)
+[![GitHub stars](https://img.shields.io/github/stars/TencentCloudBase/CloudBase-AI-ToolKit?style=social&v=1)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/TencentCloudBase/CloudBase-AI-ToolKit?style=social&v=1)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/network/members)
 
-[![GitHub issues](https://img.shields.io/github/issues/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/pulls)
-[![GitHub last commit](https://img.shields.io/github/last-commit/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/commits)
-[![GitHub contributors](https://img.shields.io/github/contributors/TencentCloudBase/cloudbase-ai-deploy-mcp)](https://github.com/TencentCloudBase/cloudbase-ai-deploy-mcp/graphs/contributors)
+[![GitHub issues](https://img.shields.io/github/issues/TencentCloudBase/CloudBase-AI-ToolKit)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/TencentCloudBase/CloudBase-AI-ToolKit)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/pulls)
+[![GitHub last commit](https://img.shields.io/github/last-commit/TencentCloudBase/CloudBase-AI-ToolKit)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/commits)
+[![GitHub contributors](https://img.shields.io/github/contributors/TencentCloudBase/CloudBase-AI-ToolKit)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/graphs/contributors)
 
 当你在**Cursor/ VSCode GitHub Copilot/WinSurf/CodeBuddy**等AI编程工具里写代码时，它能自动帮你生成可直接部署的前后端应用+小程序，并一键发布到腾讯云开发 CloudBase。
 
