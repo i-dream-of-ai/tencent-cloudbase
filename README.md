@@ -45,6 +45,20 @@
 
 ## 🚀 快速开始
 
+
+### 0.前置条件
+
+#### 1. 安装 AI 开发工具
+例如：
+- [Cursor](https://www.cursor.com/) 
+- [WindSurf](https://windsurf.com/editor)  
+- [CodeBuddy](https://copilot.tencent.com/)
+
+#### 2. 开通云开发环境
+1. 访问 [腾讯云开发控制台](https://tcb.cloud.tencent.com/dev)开通环境，新用户可以免费开通体验
+2. 在控制台「概览」页面右侧获取 **环境ID**  
+   （后续部署需要此 ID）
+
 ### 1. 使用模板创建项目
 
 以下模板已经内置了云开发面向 AI IDE 的规则配置
@@ -79,7 +93,7 @@
 
 2. 启用云开发 MCP Server
 
-点击 Cursor 客户端右上角的 ⚙️ 图标，点击进入之后，选择“MCP”，在 MCP Server 页面，找到 cloudbase 右边的开关按钮，点击启用
+点击 Cursor 客户端右上角的 ⚙️ 图标，点击进入之后，选择"MCP"，在 MCP Server 页面，找到 cloudbase 右边的开关按钮，点击启用
 
 #### 步骤2：添加 AI 规则
 
@@ -92,7 +106,7 @@
 
 #### 步骤1：配置 MCP
 
-点击 windsurf 的 Plugins icon，点击“View raw config”，在其中加入 clodubase-mcp，同时设置环境 id
+点击 windsurf 的 Plugins icon，点击"View raw config"，在其中加入 clodubase-mcp，同时设置环境 id
 
 ```json
 {
@@ -290,6 +304,40 @@ graph TD
 - **🛡️ 稳定可靠**：330 万开发者选择的 Serverless 平台
 - **🔧 开发友好**：专为AI时代设计的全栈平台
 - **💰 成本优化**：Serverless 架构更具弹性，新用户开发期间可以免费体验
+
+## 💬 技术交流群
+
+遇到问题或想要交流经验？加入我们的技术社区！
+
+### 🔥 微信交流群
+
+<div align="center">
+<img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/mcp/toolkit-qrcode.png" width="200" alt="微信群二维码">
+<br>
+<i>扫码加入微信技术交流群</i>
+</div>
+
+**群内你可以：**
+- 💡 分享你的 AI + 云开发项目
+- 🤝 技术交流和开发问题沟通
+- 📢 获取最新功能更新和最佳实践
+- 🎯 参与产品功能讨论和建议
+
+### 📱 其他交流方式
+
+| 平台 | 链接 | 说明 |
+|------|------|------|
+| **官方文档** | [📖 查看文档](https://docs.cloudbase.net/) | 完整的云开发文档 |
+| **Issue 反馈** | [🐛 提交问题](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/issues) | Bug 反馈和功能请求 |
+
+### 🎉 社区活动
+
+- **每周技术分享**：群内定期分享 AI + 云开发最佳实践
+- **项目展示**：展示你用 AI 开发的精彩项目
+- **问题答疑**：腾讯云开发团队成员在线答疑
+- **新功能预览**：第一时间体验最新功能
+
+> 💡 **提示**：加群时请备注 "CloudBase AI"，方便快速通过验证
 
 ## 🤝 贡献指南
 
