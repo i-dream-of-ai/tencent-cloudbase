@@ -59,11 +59,13 @@ export function registerFunctionTools(server: McpServer) {
     }
   );
 
-  // createFunction - 创建云函数
+  // 统一的函数管理工具
   server.tool(
-    "createFunction",
-    "创建云函数",
+    "manageFunction",
+    "统一的云函数管理工具，支持创建、更新代码、更新配置操作",
     {
+      action: z.enum(["create", "updateCode", "updateConfig"]).describe("操作类型: create=创建函数, updateCode=更新函数代码, updateConfig=更新函数配置"),
+      // create操作参数
       func: z.object({
         name: z.string().describe("函数名称"),
         timeout: z.number().optional().describe("函数超时时间"),
@@ -86,74 +88,10 @@ export function registerFunctionTools(server: McpServer) {
           name: z.string(),
           version: z.number()
         })).optional().describe("Layer配置")
-      }).describe("函数配置"),
-      functionRootPath: z.string().optional().describe("函数根目录（云函数目录的父目录），这里需要传操作系统上文件的绝对路径，注意：不要包含函数名本身，例如函数名为 'hello'，应传入 '/path/to/cloudfunctions'，而不是 '/path/to/cloudfunctions/hello'"),
-      force: z.boolean().describe("是否覆盖")
-    },
-    async ({ func, functionRootPath, force }) => {
-      // 自动填充默认 runtime
-      if (!func.runtime) {
-        func.runtime = DEFAULT_NODEJS_RUNTIME;
-      }
-      
-      // 处理函数根目录路径，确保不包含函数名
-      const processedRootPath = processFunctionRootPath(functionRootPath, func.name);
-      
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.functions.createFunction({
-        func,
-        functionRootPath: processedRootPath,
-        force
-      });
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
-    }
-  );
-
-  // updateFunctionCode - 更新函数代码
-  server.tool(
-    "updateFunctionCode",
-    "更新云函数代码",
-    {
-      func: z.object({
-        name: z.string().describe("函数名称")
-      }).describe("函数配置"),
-      functionRootPath: z.string().optional().describe("函数根目录（云函数目录的父目录），这里需要传操作系统上文件的绝对路径，注意：不要包含函数名本身，例如函数名为 'hello'，应传入 '/path/to/cloudfunctions'，而不是 '/path/to/cloudfunctions/hello'")
-    },
-    async ({ func, functionRootPath }) => {
-      // 处理函数根目录路径，确保不包含函数名
-      const processedRootPath = processFunctionRootPath(functionRootPath, func.name);
-      
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.functions.updateFunctionCode({
-        func: {
-          ...func,
-          installDependency: true // 默认安装依赖
-        },
-        functionRootPath: processedRootPath,
-      });
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
-    }
-  );
-
-  // updateFunctionConfig - 更新函数配置
-  server.tool(
-    "updateFunctionConfig",
-    "更新云函数配置",
-    {
+      }).optional().describe("函数配置（create、updateCode操作使用）"),
+      functionRootPath: z.string().optional().describe("函数根目录（云函数目录的父目录），这里需要传操作系统上文件的绝对路径，注意：不要包含函数名本身，例如函数名为 'hello'，应传入 '/path/to/cloudfunctions'，而不是 '/path/to/cloudfunctions/hello'（create、updateCode操作使用）"),
+      force: z.boolean().optional().describe("是否覆盖（create操作使用）"),
+      // updateConfig操作参数
       funcParam: z.object({
         name: z.string().describe("函数名称"),
         timeout: z.number().optional().describe("超时时间"),
@@ -163,23 +101,86 @@ export function registerFunctionTools(server: McpServer) {
           subnetId: z.string()
         }).optional().describe("VPC配置"),
         runtime: z.string().optional().describe("运行时（可选值：" + SUPPORTED_NODEJS_RUNTIMES.join('，') + "，默认 Nodejs 18.15)")
-      }).describe("函数配置")
+      }).optional().describe("函数配置（updateConfig操作使用）")
     },
-    async ({ funcParam }) => {
-      // 自动填充默认 runtime
-      if (!funcParam.runtime) {
-        funcParam.runtime = DEFAULT_NODEJS_RUNTIME;
+    async ({ action, func, functionRootPath, force, funcParam }) => {
+      try {
+        const cloudbase = await getCloudBaseManager()
+        let result;
+
+        switch (action) {
+          case "create":
+            if (!func) {
+              throw new Error("创建函数需要提供func参数");
+            }
+            // 自动填充默认 runtime
+            if (!func.runtime) {
+              func.runtime = DEFAULT_NODEJS_RUNTIME;
+            }
+
+            // 处理函数根目录路径，确保不包含函数名
+            const processedRootPath = processFunctionRootPath(functionRootPath, func.name);
+
+            result = await cloudbase.functions.createFunction({
+              func,
+              functionRootPath: processedRootPath,
+              force: force || false
+            });
+            break;
+
+          case "updateCode":
+            if (!func) {
+              throw new Error("更新函数代码需要提供func参数");
+            }
+            // 处理函数根目录路径，确保不包含函数名
+            const processedCodeRootPath = processFunctionRootPath(functionRootPath, func.name);
+
+            result = await cloudbase.functions.updateFunctionCode({
+              func: {
+                ...func,
+                installDependency: true // 默认安装依赖
+              },
+              functionRootPath: processedCodeRootPath,
+            });
+            break;
+
+          case "updateConfig":
+            if (!funcParam) {
+              throw new Error("更新函数配置需要提供funcParam参数");
+            }
+            // 自动填充默认 runtime
+            if (!funcParam.runtime) {
+              funcParam.runtime = DEFAULT_NODEJS_RUNTIME;
+            }
+            result = await cloudbase.functions.updateFunctionConfig(funcParam);
+            break;
+
+          default:
+            throw new Error(`不支持的操作类型: ${action}`);
+        }
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(result, null, 2)
+            }
+          ]
+        };
+      } catch (error: any) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                success: false,
+                error: error.message,
+                message: `云函数${action}操作失败`
+              }, null, 2)
+            }
+          ]
+        };
       }
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.functions.updateFunctionConfig(funcParam);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
     }
   );
 
@@ -257,51 +258,68 @@ export function registerFunctionTools(server: McpServer) {
     }
   );
 
-  // createFunctionTriggers - 创建函数触发器
+  // 统一的函数触发器管理工具
   server.tool(
-    "createFunctionTriggers",
-    "创建云函数触发器",
+    "manageFunctionTriggers",
+    "统一的云函数触发器管理工具，支持创建、删除触发器操作",
     {
+      action: z.enum(["create", "delete"]).describe("操作类型: create=创建触发器, delete=删除触发器"),
       name: z.string().describe("函数名"),
+      // create操作参数
       triggers: z.array(z.object({
         name: z.string().describe("触发器名称"),
         type: z.string().describe("触发器类型"),
         config: z.string().describe("触发器配置")
-      })).describe("触发器配置数组")
+      })).optional().describe("触发器配置数组（create操作必需）"),
+      // delete操作参数
+      triggerName: z.string().optional().describe("触发器名称（delete操作必需）")
     },
-    async ({ name, triggers }) => {
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.functions.createFunctionTriggers(name, triggers);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
-    }
-  );
+    async ({ action, name, triggers, triggerName }) => {
+      try {
+        const cloudbase = await getCloudBaseManager()
+        let result;
 
-  // deleteFunctionTrigger - 删除函数触发器
-  server.tool(
-    "deleteFunctionTrigger",
-    "删除云函数触发器",
-    {
-      name: z.string().describe("函数名"),
-      triggerName: z.string().describe("触发器名称")
-    },
-    async ({ name, triggerName }) => {
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.functions.deleteFunctionTrigger(name, triggerName);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
+        switch (action) {
+          case "create":
+            if (!triggers || triggers.length === 0) {
+              throw new Error("创建触发器需要提供triggers参数");
+            }
+            result = await cloudbase.functions.createFunctionTriggers(name, triggers);
+            break;
+
+          case "delete":
+            if (!triggerName) {
+              throw new Error("删除触发器需要提供triggerName参数");
+            }
+            result = await cloudbase.functions.deleteFunctionTrigger(name, triggerName);
+            break;
+
+          default:
+            throw new Error(`不支持的操作类型: ${action}`);
+        }
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(result, null, 2)
+            }
+          ]
+        };
+      } catch (error: any) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                success: false,
+                error: error.message,
+                message: `函数触发器${action}操作失败`
+              }, null, 2)
+            }
+          ]
+        };
+      }
     }
   );
 

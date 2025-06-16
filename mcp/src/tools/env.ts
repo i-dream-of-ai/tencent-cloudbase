@@ -126,45 +126,54 @@ export function registerEnvTools(server: McpServer) {
     }
   );
 
-  // createEnvDomain
+  // 统一的环境域名管理工具
   server.tool(
-    "createEnvDomain",
-    "为云开发环境添加安全域名",
+    "manageEnvDomain",
+    "统一的云开发环境域名管理工具，支持添加、删除安全域名操作",
     {
+      action: z.enum(["create", "delete"]).describe("操作类型: create=添加安全域名, delete=删除安全域名"),
       domains: z.array(z.string()).describe("安全域名数组")
     },
-    async ({ domains }) => {
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.env.createEnvDomain(domains);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
-    }
-  );
+    async ({ action, domains }) => {
+      try {
+        const cloudbase = await getCloudBaseManager()
+        let result;
 
-  // deleteEnvDomain
-  server.tool(
-    "deleteEnvDomain",
-    "删除云开发环境的指定安全域名",
-    {
-      domains: z.array(z.string()).describe("安全域名数组")
-    },
-    async ({ domains }) => {
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.env.deleteEnvDomain(domains);
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
+        switch (action) {
+          case "create":
+            result = await cloudbase.env.createEnvDomain(domains);
+            break;
+
+          case "delete":
+            result = await cloudbase.env.deleteEnvDomain(domains);
+            break;
+
+          default:
+            throw new Error(`不支持的操作类型: ${action}`);
+        }
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(result, null, 2)
+            }
+          ]
+        };
+      } catch (error: any) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                success: false,
+                error: error.message,
+                message: `环境域名${action}操作失败`
+              }, null, 2)
+            }
+          ]
+        };
+      }
     }
   );
 

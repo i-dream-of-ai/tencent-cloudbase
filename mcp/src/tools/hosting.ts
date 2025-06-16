@@ -15,125 +15,130 @@ interface ExtendedEnvInfo {
 }
 
 export function registerHostingTools(server: McpServer) {
-  // uploadFiles - 上传文件到静态网站托管
+  // 统一的文件管理工具
   server.tool(
-    "uploadFiles",
-    "上传文件到静态网站托管",
+    "manageHostingFiles",
+    "统一的静态网站托管文件管理工具，支持上传、列表、删除、搜索文件操作",
     {
-      localPath: z.string().optional().describe("本地文件或文件夹路径，需要是绝对路径，例如 /tmp/files/data.txt"),
-      cloudPath: z.string().optional().describe("云端文件或文件夹路径，例如files/data.txt"),
+      action: z.enum(["upload", "list", "delete", "find"]).describe("操作类型: upload=上传文件, list=获取文件列表, delete=删除文件, find=搜索文件"),
+      // upload操作参数
+      localPath: z.string().optional().describe("本地文件或文件夹路径，需要是绝对路径（upload操作使用）"),
+      cloudPath: z.string().optional().describe("云端文件或文件夹路径（upload、delete操作使用）"),
       files: z.array(z.object({
         localPath: z.string(),
         cloudPath: z.string()
-      })).default([]).describe("多文件上传配置"),
-      ignore: z.union([z.string(), z.array(z.string())]).optional().describe("忽略文件模式")
+      })).optional().describe("多文件上传配置（upload操作使用）"),
+      ignore: z.union([z.string(), z.array(z.string())]).optional().describe("忽略文件模式（upload操作使用）"),
+      // delete操作参数
+      isDir: z.boolean().optional().describe("是否为文件夹（delete操作使用）"),
+      // find操作参数
+      prefix: z.string().optional().describe("匹配前缀（find操作必需）"),
+      marker: z.string().optional().describe("起始对象键标记（find操作使用）"),
+      maxKeys: z.number().optional().describe("单次返回最大条目数（find操作使用）"),
+      // list操作参数
+      confirm: z.literal("yes").optional().describe("确认操作（list操作使用）")
     },
-    async ({ localPath, cloudPath, files, ignore }) => {
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.hosting.uploadFiles({
-        localPath,
-        cloudPath,
-        files,
-        ignore
-      });
-      
-      // 获取环境信息
-      const envInfo = await cloudbase.env.getEnvInfo() as ExtendedEnvInfo;
-      
-      // 获取静态网站地址
-      let staticDomain = "";
-      if (envInfo?.EnvInfo?.StaticStorages && envInfo.EnvInfo.StaticStorages.length > 0) {
-        staticDomain = envInfo.EnvInfo.StaticStorages[0].StaticDomain;
+    async ({ action, localPath, cloudPath, files, ignore, isDir, prefix, marker, maxKeys, confirm }) => {
+      try {
+        const cloudbase = await getCloudBaseManager()
+        let result;
+
+        switch (action) {
+          case "upload":
+            result = await cloudbase.hosting.uploadFiles({
+              localPath,
+              cloudPath,
+              files: files || [],
+              ignore
+            });
+
+            // 获取环境信息
+            const envInfo = await cloudbase.env.getEnvInfo() as ExtendedEnvInfo;
+
+            // 获取静态网站地址
+            let staticDomain = "";
+            if (envInfo?.EnvInfo?.StaticStorages && envInfo.EnvInfo.StaticStorages.length > 0) {
+              staticDomain = envInfo.EnvInfo.StaticStorages[0].StaticDomain;
+            }
+
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify({
+                    uploadResult: result?.files.map((item: { Key: any; }) => {
+                      return item.Key
+                    }),
+                    staticWebsiteUrl: staticDomain ? `https://${staticDomain}` : "",
+                    fileUrl: staticDomain && cloudPath ? `https://${staticDomain}/${cloudPath}` : ""
+                  }, null, 2)
+                }
+              ]
+            };
+
+          case "list":
+            result = await cloudbase.hosting.listFiles();
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify(result, null, 2)
+                }
+              ]
+            };
+
+          case "delete":
+            if (!cloudPath) {
+              throw new Error("删除文件需要提供cloudPath参数");
+            }
+            result = await cloudbase.hosting.deleteFiles({
+              cloudPath,
+              isDir: isDir || false
+            });
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify(result, null, 2)
+                }
+              ]
+            };
+
+          case "find":
+            if (!prefix) {
+              throw new Error("搜索文件需要提供prefix参数");
+            }
+            result = await cloudbase.hosting.findFiles({
+              prefix,
+              marker,
+              maxKeys
+            });
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify(result, null, 2)
+                }
+              ]
+            };
+
+          default:
+            throw new Error(`不支持的操作类型: ${action}`);
+        }
+      } catch (error: any) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                success: false,
+                error: error.message,
+                message: `静态网站托管文件${action}操作失败`
+              }, null, 2)
+            }
+          ]
+        };
       }
-      
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify({
-              uploadResult: result?.files.map((item: { Key: any; }) => {
-                return item.Key
-              }),
-              staticWebsiteUrl: staticDomain ? `https://${staticDomain}` : "",
-              // 返回文件的完整访问URL
-              fileUrl: staticDomain && cloudPath ? `https://${staticDomain}/${cloudPath}` : ""
-            }, null, 2)
-          }
-        ]
-      };
-    }
-  );
-
-  // listFiles - 获取文件列表
-  server.tool(
-    "listFiles",
-    "获取静态网站托管的文件列表",
-    {
-      confirm: z.literal("yes").describe("确认操作，默认传 yes")
-    },
-    async () => {
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.hosting.listFiles();
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
-    }
-  );
-
-  // deleteFiles - 删除文件
-  server.tool(
-    "deleteFiles",
-    "删除静态网站托管的文件或文件夹",
-    {
-      cloudPath: z.string().describe("云端文件或文件夹路径"),
-      isDir: z.boolean().default(false).describe("是否为文件夹")
-    },
-    async ({ cloudPath, isDir }) => {
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.hosting.deleteFiles({
-        cloudPath,
-        isDir
-      });
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
-    }
-  );
-
-  // findFiles - 搜索文件
-  server.tool(
-    "findFiles",
-    "搜索静态网站托管的文件",
-    {
-      prefix: z.string().describe("匹配前缀"),
-      marker: z.string().optional().describe("起始对象键标记"),
-      maxKeys: z.number().optional().describe("单次返回最大条目数")
-    },
-    async ({ prefix, marker, maxKeys }) => {
-      const cloudbase = await getCloudBaseManager()
-      const result = await cloudbase.hosting.findFiles({
-        prefix,
-        marker,
-        maxKeys
-      });
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2)
-          }
-        ]
-      };
     }
   );
 
