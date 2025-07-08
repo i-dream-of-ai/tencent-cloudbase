@@ -641,7 +641,61 @@ AI 会自动下载并更新最新的规则配置到你的项目目录。
 </details>
 
 
-### 3. 开始开发
+### 3. 插件配置（可选）
+
+CloudBase MCP 支持插件系统，默认启用核心功能插件。如果某些场景下工具数量受限，可以通过环境变量自定义插件组合。
+
+#### 默认插件
+
+以下插件默认启用，包含核心功能：
+
+- **env** - 环境管理（登录、退出、查询）
+- **database** - 数据库操作（集合、文档、索引）
+- **functions** - 云函数管理（创建、更新、日志）
+- **hosting** - 静态托管（文件上传、域名配置）
+- **storage** - 云存储（文件管理、CDN）
+- **setup** - 项目初始化（模板下载、配置生成）
+- **interactive** - 交互工具（用户对话、提示）
+
+#### 可选插件
+
+以下插件可根据需要启用：
+
+- **rag** - 知识库搜索（AI 智能问答）
+- **download** - 文件下载（远程资源获取）
+- **gateway** - API 网关（HTTP 函数配置）
+- **file** - 文件工具（本地文件操作）
+
+#### 环境变量配置
+
+**启用指定插件**
+
+```bash
+export CLOUDBASE_MCP_PLUGINS_ENABLED="env,database,functions,hosting"
+```
+
+**禁用特定插件**
+
+```bash
+export CLOUDBASE_MCP_PLUGINS_DISABLED="rag,download,gateway"
+```
+
+**快速配置示例**
+
+```bash
+# 基础开发环境（适合初学者）
+export CLOUDBASE_MCP_PLUGINS_ENABLED="env,database,functions,hosting"
+
+# 完整开发环境（启用所有功能）
+export CLOUDBASE_MCP_PLUGINS_ENABLED="env,database,functions,hosting,storage,setup,interactive,rag,download,gateway"
+
+# 纯后端开发（只用云函数和数据库）
+export CLOUDBASE_MCP_PLUGINS_ENABLED="env,database,functions"
+```
+
+> **注意**：如果同时设置了 `CLOUDBASE_MCP_PLUGINS_ENABLED` 和 `CLOUDBASE_MCP_PLUGINS_DISABLED`，优先使用 `ENABLED` 配置。
+
+### 4. 开始开发
 
 
 在开始使用前，只需要对 AI 说
