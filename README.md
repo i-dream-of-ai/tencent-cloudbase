@@ -24,7 +24,7 @@
 [![CNB 镜像](https://img.shields.io/badge/CNB-CloudBase--AI--ToolKit-blue?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHJ4PSIyIiBmaWxsPSIjM0I4MkY2Ii8+PHBhdGggZD0iTTUgM0g3VjVINSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48cGF0aCBkPSJNNSA3SDdWOUg1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIvPjwvc3ZnPg==)](https://cnb.cool/tencent/cloud/cloudbase/CloudBase-AI-ToolKit)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/TencentCloudBase/CloudBase-AI-ToolKit)
 
-当你在**Cursor/ VSCode GitHub Copilot/WinSurf/CodeBuddy/Augment Code/Claude Code**等AI编程工具里写代码时，它能自动帮你生成可直接部署的前后端应用+小程序，并一键发布到腾讯云开发 CloudBase。
+当你在**Cursor/ VSCode GitHub Copilot/WinSurf/CodeBuddy/Augment Code/Claude Code/OpenAI Codex CLI**等AI编程工具里写代码时，它能自动帮你生成可直接部署的前后端应用+小程序，并一键发布到腾讯云开发 CloudBase。
 
 
 **📹 完整视频演示 ⬇️**
@@ -150,6 +150,7 @@ npx -y clear-npx-cache
 | [Augment Code](https://www.augmentcode.com/) | VS Code、JetBrains 插件 |
 | [Claude Code](https://www.anthropic.com/claude-code) | 命令行工具 |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | 命令行工具 |
+| [OpenAI Codex CLI](https://github.com/openai/codex) | 命令行工具 |
 
 <details>
 <summary><strong>🔧 Cursor 配置</strong></summary>
@@ -612,6 +613,55 @@ gemini
 - `/mcp` - 查看 MCP 服务器状态
 - `/memory show` - 查看当前规则
 - `!command` - 执行 Shell 命令
+
+</details>
+
+<details>
+<summary><strong>🤖 OpenAI Codex CLI 配置</strong></summary>
+
+#### 步骤1：安装 OpenAI Codex CLI
+
+从 [OpenAI Codex CLI 官网](https://github.com/openai/codex) 下载并安装 OpenAI Codex CLI。
+
+#### 步骤2：配置 CloudBase MCP
+
+> [!TIP] 
+> 如果安装以后工具数量一直为 0，请参考[常见问题](https://docs.cloudbase.net/ai/cloudbase-ai-toolkit/faq#mcp-%E6%98%BE%E7%A4%BA%E5%B7%A5%E5%85%B7%E6%95%B0%E9%87%8F%E4%B8%BA-0-%E6%80%8E%E4%B9%88%E5%8A%9E)
+
+如果使用模板项目，MCP 配置已经预置完成。如果不是从模板开始，需要在 `~/.codex/config.toml` 文件中添加：
+
+```toml
+# IMPORTANT: the top-level key is `mcp_servers` rather than `mcpServers`.
+[mcp_servers.cloudbase]
+command = "npx"
+args = ["-y", "@cloudbase/cloudbase-mcp@latest"]
+```
+
+#### 步骤3：启用 AI 规则
+
+模板中已包含 `CLAUDE.md` 文件，OpenAI Codex CLI 会自动识别云开发最佳实践。如果不是从模板开始，可以让 AI 帮你下载云开发规则：
+```
+在当前项目中下载云开发 AI 规则
+```
+
+#### 步骤4：开始开发
+
+在 OpenAI Codex CLI 中与 AI 对话：
+
+```
+登录云开发
+```
+
+然后就可以开始开发了，例如：
+
+```
+创建一个在线投票系统，支持创建投票、参与投票、结果统计，使用云数据库存储，最后部署
+```
+
+**常用命令：**
+- `/tools` - 查看可用工具
+- `/mcp` - 查看 MCP 服务器状态
+- `/memory show` - 查看当前规则
 
 </details>
 
