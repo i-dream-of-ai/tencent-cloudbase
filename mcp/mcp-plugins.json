@@ -1,0 +1,25 @@
+{
+  "enabled": ["env", "database", "functions", "hosting", "storage"],
+  "disabled": ["rag", "gateway"],
+  "maxTools": 35,
+  "priority": {
+    "env": 100,
+    "database": 90,
+    "functions": 80,
+    "hosting": 70,
+    "storage": 60
+  },
+  "pluginConfigs": {
+    "database": {
+      "enableIndexes": true,
+      "enableDataModels": true
+    },
+    "functions": {
+      "defaultRuntime": "Nodejs18.15",
+      "enableTriggers": true
+    },
+    "hosting": {
+      "enableCustomDomains": false
+    }
+  }
+}

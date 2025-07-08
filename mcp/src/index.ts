@@ -35,6 +35,23 @@ export {
 
 export type { InteractiveResult } from "./interactive-server.js";
 
+// Plugin system exports
+export {
+  createPluginManager,
+  createBuiltinPluginRegistry,
+  loadPluginConfig,
+  createPlugin,
+  createPlugins,
+  PLUGIN_CATEGORIES,
+  DEFAULT_PRIORITIES,
+  getDefaultPriority,
+  type McpPlugin,
+  type PluginConfig,
+  type PluginManager,
+  type PluginMetadata,
+  type ConfigLoaderOptions
+} from "./plugin-system/index.js";
+
 /**
  * Get interactive server instance (CommonJS compatible)
  */

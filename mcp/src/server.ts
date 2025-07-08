@@ -1,21 +1,18 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { registerEnvTools } from "./tools/env.js";
-import { registerFileTools } from "./tools/file.js";
-import { registerFunctionTools } from "./tools/functions.js";
-import { registerDatabaseTools } from "./tools/database.js";
-import { registerHostingTools } from "./tools/hosting.js";
-import { registerDownloadTools } from "./tools/download.js";
-import { registerStorageTools } from "./tools/storage.js";
-import { registerRagTools } from './tools/rag.js';
-import { registerSetupTools } from "./tools/setup.js";
-import { registerInteractiveTools } from "./tools/interactive.js";
 import { wrapServerWithTelemetry } from "./utils/tool-wrapper.js";
-import { registerGatewayTools } from "./tools/gateway.js";
 import { CloudBaseOptions } from "./types.js";
+import { 
+  createPluginManager, 
+  createBuiltinPluginRegistry, 
+  loadPluginConfig,
+  PluginConfig,
+  PluginManager
+} from "./plugin-system/index.js";
 
-// 扩展 McpServer 类型以包含 cloudBaseOptions 和新的registerTool方法
+// 扩展 McpServer 类型以包含 cloudBaseOptions 和插件管理器
 export interface ExtendedMcpServer extends McpServer {
   cloudBaseOptions?: CloudBaseOptions;
+  pluginManager?: PluginManager;
 }
 
 /**
@@ -28,12 +25,14 @@ export function createCloudBaseMcpServer(options?: {
   version?: string;
   enableTelemetry?: boolean;
   cloudBaseOptions?: CloudBaseOptions;
+  pluginConfig?: PluginConfig;
 }): ExtendedMcpServer {
   const {
     name = "cloudbase-mcp",
     version = "1.0.0",
     enableTelemetry = true,
-    cloudBaseOptions
+    cloudBaseOptions,
+    pluginConfig
   } = options ?? {};
 
   // Create server instance
@@ -55,18 +54,21 @@ export function createCloudBaseMcpServer(options?: {
     wrapServerWithTelemetry(server);
   }
 
-  // Register all tools
-  registerEnvTools(server);
-  registerRagTools(server);
-  // registerFileTools(server);
-  registerDatabaseTools(server);
-  registerHostingTools(server);
-  registerFunctionTools(server);
-  registerDownloadTools(server);
-  registerStorageTools(server);
-  registerSetupTools(server);
-  registerInteractiveTools(server);
-  registerGatewayTools(server);
+  // Initialize plugin system
+  const config = pluginConfig || loadPluginConfig();
+  const pluginManager = createPluginManager(server, config);
+  
+  // Register built-in plugins
+  const builtinRegistry = createBuiltinPluginRegistry();
+  builtinRegistry.getPlugins().forEach(plugin => {
+    pluginManager.registerPlugin(plugin);
+  });
+
+  // Load plugins based on configuration
+  pluginManager.loadPlugins();
+
+  // Store plugin manager in server instance
+  server.pluginManager = pluginManager;
 
   return server;
 }
