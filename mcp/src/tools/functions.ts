@@ -328,14 +328,14 @@ export function registerFunctionTools(server: ExtendedMcpServer) {
     "getFunctionLogs",
     {
       title: "获取云函数日志",
-      description: "获取云函数日志",
+      description: "获取云函数日志。支持的orderBy字段：StartTime(开始时间), Duration(执行时长), MemUsage(内存使用), RetCode(返回码)",
       inputSchema: {
         options: z.object({
           name: z.string().describe("函数名称"),
           offset: z.number().optional().describe("偏移量"),
           limit: z.number().optional().describe("返回数量"),
-          order: z.string().optional().describe("排序方式"),
-          orderBy: z.string().optional().describe("排序字段"),
+          order: z.string().optional().describe("排序方式：asc(升序) 或 desc(降序)"),
+          orderBy: z.string().optional().describe("排序字段：StartTime(开始时间), Duration(执行时长), MemUsage(内存使用), RetCode(返回码)"),
           startTime: z.string().optional().describe("开始时间"),
           endTime: z.string().optional().describe("结束时间"),
           requestId: z.string().optional().describe("请求ID")
@@ -350,7 +350,29 @@ export function registerFunctionTools(server: ExtendedMcpServer) {
     async ({ options }: { options: any }) => {
       // 使用闭包中的 cloudBaseOptions
       const cloudbase = await getManager();
-      const result = await cloudbase.functions.getFunctionLogs(options);
+      
+      // 参数转换和验证
+      const transformedOptions = { ...options };
+      
+      // 映射常见的orderBy字段名到CloudBase API期望的格式
+      if (transformedOptions.orderBy) {
+        const orderByMapping: { [key: string]: string } = {
+          'RequestTime': 'StartTime',
+          'StartTime': 'StartTime',
+          'Duration': 'Duration',
+          'MemUsage': 'MemUsage',
+          'RetCode': 'RetCode'
+        };
+        
+        const mappedOrderBy = orderByMapping[transformedOptions.orderBy];
+        if (mappedOrderBy) {
+          transformedOptions.orderBy = mappedOrderBy;
+        } else {
+          throw new Error(`不支持的orderBy字段: ${transformedOptions.orderBy}。支持的字段：${Object.keys(orderByMapping).join(', ')}`);
+        }
+      }
+      
+      const result = await cloudbase.functions.getFunctionLogs(transformedOptions);
       return {
         content: [
           {

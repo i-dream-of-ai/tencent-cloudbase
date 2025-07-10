@@ -1065,7 +1065,7 @@
     },
     {
       "name": "getFunctionLogs",
-      "description": "获取云函数日志",
+      "description": "获取云函数日志。支持的orderBy字段：StartTime(开始时间), Duration(执行时长), MemUsage(内存使用), RetCode(返回码)",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1086,11 +1086,11 @@
               },
               "order": {
                 "type": "string",
-                "description": "排序方式"
+                "description": "排序方式：asc(升序) 或 desc(降序)"
               },
               "orderBy": {
                 "type": "string",
-                "description": "排序字段"
+                "description": "排序字段：StartTime(开始时间), Duration(执行时长), MemUsage(内存使用), RetCode(返回码)"
               },
               "startTime": {
                 "type": "string",
