@@ -73,6 +73,7 @@
 - [教程](./tutorials) - 编程实战、AI Coding组合、应用项目和视频教程
 - [插件系统](./plugins) - 按需启用工具模块
 - [MCP工具](./mcp-tools) - 了解所有可用工具
+- [微信支付集成](./wechat-pay-integration) - 快速集成微信支付功能
 - [MCP上架材料](./mcp-listing-materials.md) - 第三方市场上架材料（英文）
 - [MCP上架材料](./mcp-listing-materials-zh.md) - 第三方市场上架材料（中文）
 - [常见问题](./troubleshooting) - 解决开发中的问题
