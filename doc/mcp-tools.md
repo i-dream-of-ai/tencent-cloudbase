@@ -1,6 +1,6 @@
 # MCP 工具
 
-CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种操作。目前共有 **36 个工具**，涵盖环境管理、数据库操作、云函数管理、静态托管等核心功能。
+CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种操作。目前共有 **40 个工具**，涵盖环境管理、数据库操作、云函数管理、静态托管、小程序发布等核心功能。
 
 📋 **完整工具规格**: [查看 tools.json](https://cnb.cool/tencent/cloud/cloudbase/CloudBase-AI-ToolKit/-/git/raw/main/scripts/tools.json)
 
@@ -13,6 +13,7 @@ CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种
 | ⚡ [云函数管理](#云函数管理) | 9 个 | 函数创建、更新、调用、日志 |
 | 🌐 [静态托管](#静态托管) | 6 个 | 文件上传、管理、域名配置 |
 | 📁 [文件操作](#文件操作) | 2 个 | 文件下载、云存储上传 |
+| 📱 [小程序发布](#小程序发布) | 4 个 | 代码上传、预览、构建、配置 |
 | 🛠️ [工具支持](#工具支持) | 4 个 | 模板下载、知识库搜索、联网搜索、交互对话 |
 
 ---
@@ -249,6 +250,44 @@ CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种
 
 ---
 
+## 📱 小程序发布
+
+### 🚀 代码发布
+
+#### `uploadMiniprogramCode`
+**功能**: 上传小程序代码到微信平台
+**参数**: 
+- `projectPath` (string): 小程序项目路径
+- `appid` (string): 小程序 appid，可选
+- `version` (string): 版本号，可选
+- `desc` (string): 版本描述，可选
+- `robot` (number): 机器人编号，可选
+
+#### `previewMiniprogramCode`
+**功能**: 预览小程序代码并生成二维码
+**参数**: 
+- `projectPath` (string): 小程序项目路径
+- `appid` (string): 小程序 appid，可选
+- `qrcodeFormat` (string): 二维码格式，可选
+- `pagePath` (string): 预览页面路径，可选
+- `robot` (number): 机器人编号，可选
+
+### 🔧 构建管理
+
+#### `buildMiniprogramNpm`
+**功能**: 构建小程序 npm 包
+**参数**: 
+- `projectPath` (string): 小程序项目路径
+- `appid` (string): 小程序 appid，可选
+- `robot` (number): 机器人编号，可选
+
+#### `getMiniprogramProjectConfig`
+**功能**: 获取小程序项目配置信息
+**参数**: 
+- `projectPath` (string): 小程序项目路径
+
+---
+
 ## 🛠️ 工具支持
 
 ### 📚 辅助工具
@@ -285,6 +324,7 @@ CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种
 - 🔍 **"查询环境信息"** → AI 调用 `envQuery` 工具  
 - 🚀 **"部署应用"** → AI 调用相关的部署工具
 - 📊 **"查询数据库"** → AI 调用 `queryDocuments` 工具
+- 📱 **"上传小程序代码"** → AI 调用 `uploadMiniprogramCode` 工具
 
 ## ⚙️ 配置说明
 
@@ -296,6 +336,25 @@ MCP 工具通过以下配置添加到你的 AI IDE 中：
     "cloudbase-mcp": {
       "command": "npx",
       "args": ["-y", "@cloudbase/cloudbase-mcp@latest"]
+    }
+  }
+}
+```
+
+### 启用小程序插件
+
+小程序插件不在默认启用列表中，需要显式启用：
+
+```json
+{
+  "mcpServers": {
+    "cloudbase-mcp": {
+      "command": "npx",
+      "args": ["-y", "@cloudbase/cloudbase-mcp@latest"],
+      "env": {
+        "MINIPROGRAM_PRIVATE_KEY": "你的小程序私钥",
+        "CLOUDBASE_MCP_PLUGINS_ENABLED": "env,database,functions,hosting,storage,setup,interactive,rag,gateway,download,miniprogram"
+      }
     }
   }
 }
@@ -329,7 +388,7 @@ MCP 工具通过以下配置添加到你的 AI IDE 中：
 
 ## 🔄 工具优化
 
-为了提供更好的使用体验，我们将原来 40 个工具优化为 36 个：
+为了提供更好的使用体验，我们将原来 44 个工具优化为 40 个：
 
 - ✅ **envQuery**: 合并了 `listEnvs` + `getEnvInfo` + `getEnvAuthDomains`
 - ✅ **envDomainManagement**: 合并了 `createEnvDomain` + `deleteEnvDomain`  
