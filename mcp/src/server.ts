@@ -8,6 +8,7 @@ import { registerStorageTools } from "./tools/storage.js";
 import { registerRagTools } from './tools/rag.js';
 import { registerSetupTools } from "./tools/setup.js";
 import { registerInteractiveTools } from "./tools/interactive.js";
+import { registerMiniprogramTools } from "./tools/miniprogram.js";
 import { wrapServerWithTelemetry } from "./utils/tool-wrapper.js";
 import { registerGatewayTools } from "./tools/gateway.js";
 import { CloudBaseOptions } from "./types.js";
@@ -19,7 +20,7 @@ interface PluginDefinition {
 }
 
 // 默认插件列表
-const DEFAULT_PLUGINS = ['env', 'database', 'functions', 'hosting', 'storage', 'setup', 'interactive', 'rag', 'gateway', 'download'];
+const DEFAULT_PLUGINS = ['env', 'database', 'functions', 'hosting', 'storage', 'setup', 'interactive', 'rag', 'gateway', 'download', 'miniprogram'];
 
 // 可用插件映射
 const AVAILABLE_PLUGINS: Record<string, PluginDefinition> = {
@@ -33,6 +34,7 @@ const AVAILABLE_PLUGINS: Record<string, PluginDefinition> = {
   rag: { name: 'rag', register: registerRagTools },
   download: { name: 'download', register: registerDownloadTools },
   gateway: { name: 'gateway', register: registerGatewayTools },
+  miniprogram: { name: 'miniprogram', register: registerMiniprogramTools },
 };
 
 /**
