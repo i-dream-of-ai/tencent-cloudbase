@@ -3,9 +3,6 @@ import { ToolAnnotations, Tool } from "@modelcontextprotocol/sdk/types.js";
 import { reportToolCall } from './telemetry.js';
 import { debug } from './logger.js';
 import os from 'os';
-import { readFileSync } from 'fs';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
 
 /**
  * 工具包装器，为 MCP 工具添加数据上报功能
@@ -20,16 +17,9 @@ export type { ToolAnnotations, Tool } from "@modelcontextprotocol/sdk/types.js";
  * @returns MCP 版本号
  */
 function getMcpVersion(): string {
-    try {
-        const currentFileUrl = import.meta.url;
-        const currentFilePath = fileURLToPath(currentFileUrl);
-        const currentDir = dirname(currentFilePath);
-        const packageJsonPath = join(currentDir, '../../package.json');
-        const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
-        return packageJson.version || 'unknown';
-    } catch (error) {
-        return 'unknown';
-    }
+    // 从构建时注入的版本号获取MCP版本信息
+    const mcpVersion = process.env.npm_package_version || __MCP_VERSION__ || 'unknown';
+    return mcpVersion;
 }
 
 /**
