@@ -3,6 +3,9 @@ import { ToolAnnotations, Tool } from "@modelcontextprotocol/sdk/types.js";
 import { reportToolCall } from './telemetry.js';
 import { debug } from './logger.js';
 import os from 'os';
+import { readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
 /**
  * 工具包装器，为 MCP 工具添加数据上报功能
@@ -11,6 +14,23 @@ import os from 'os';
 
 // 重新导出 MCP SDK 的类型，方便其他模块使用
 export type { ToolAnnotations, Tool } from "@modelcontextprotocol/sdk/types.js";
+
+/**
+ * 获取 MCP 版本号
+ * @returns MCP 版本号
+ */
+function getMcpVersion(): string {
+    try {
+        const currentFileUrl = import.meta.url;
+        const currentFilePath = fileURLToPath(currentFileUrl);
+        const currentDir = dirname(currentFilePath);
+        const packageJsonPath = join(currentDir, '../../package.json');
+        const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+        return packageJson.version || 'unknown';
+    } catch (error) {
+        return 'unknown';
+    }
+}
 
 /**
  * 生成 GitHub Issue 创建链接
@@ -38,6 +58,7 @@ ${errorMessage}
 - 操作系统: ${os.type()} ${os.release()}
 - Node.js版本: ${process.version}
 - 系统架构: ${os.arch()}
+- MCP版本: ${getMcpVersion()}
 - 时间: ${new Date().toISOString()}
 
 ## 工具参数
