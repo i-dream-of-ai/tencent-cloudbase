@@ -1,6 +1,6 @@
 # MCP 工具
 
-CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种操作。目前共有 **43 个工具**，涵盖环境管理、数据库操作、云函数管理、静态托管、小程序发布等核心功能。
+CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种操作。目前共有 **56 个工具**，涵盖环境管理、数据库操作、云函数管理、云托管服务、静态托管、小程序发布等核心功能。
 
 📋 **完整工具规格**: [查看 tools.json](https://cnb.cool/tencent/cloud/cloudbase/CloudBase-AI-ToolKit/-/git/raw/main/scripts/tools.json)
 
@@ -11,6 +11,7 @@ CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种
 | 🌍 [环境管理](#环境管理) | 4 个 | 登录、环境信息查询、域名管理 |
 | 🗄️ [数据库操作](#数据库操作) | 11 个 | 集合管理、文档 CRUD、索引操作 |
 | ⚡ [云函数管理](#云函数管理) | 9 个 | 函数创建、更新、调用、日志 |
+| 🚀 [云托管服务](#云托管服务) | 13 个 | 服务创建、版本管理、流量配置、监控运维 |
 | 🌐 [静态托管](#静态托管) | 6 个 | 文件上传、管理、域名配置 |
 | 📁 [文件操作](#文件操作) | 2 个 | 文件下载、云存储上传 |
 | 📱 [小程序发布](#小程序发布) | 7 个 | 小程序上传、预览、构建、配置、调试、质量检查 |
@@ -197,6 +198,124 @@ CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种
 
 ---
 
+## 🚀 云托管服务
+
+### 📋 服务管理
+
+#### `getCloudRunServiceList`
+**功能**: 获取云托管服务列表
+**参数**: 
+- `offset` (number): 偏移量
+- `limit` (number): 返回数量限制
+
+#### `createCloudRunService`
+**功能**: 创建云托管服务
+**参数**: 
+- `serviceName` (string): 服务名称
+- `serviceType` (string): 服务类型 web/worker
+- `description` (string): 服务描述
+- `isPublic` (boolean): 是否公网访问
+- `cpu` (string): CPU 规格
+- `memory` (string): 内存规格
+- `minReplicas` (number): 最小副本数
+- `maxReplicas` (number): 最大副本数
+- `containerPort` (number): 容器端口
+- `envVariables` (object): 环境变量
+- `customLogs` (string): 自定义日志路径
+- `initialDelaySeconds` (number): 初始延迟时间
+- `dockerfile` (string): Dockerfile 内容
+- `buildDir` (string): 构建目录路径
+
+#### `updateCloudRunService`
+**功能**: 更新云托管服务配置
+**参数**: 
+- `serviceName` (string): 服务名称
+- `description` (string): 服务描述
+- `isPublic` (boolean): 是否公网访问
+- `cpu` (string): CPU 规格
+- `memory` (string): 内存规格
+- `minReplicas` (number): 最小副本数
+- `maxReplicas` (number): 最大副本数
+- `containerPort` (number): 容器端口
+- `envVariables` (object): 环境变量
+- `customLogs` (string): 自定义日志路径
+- `initialDelaySeconds` (number): 初始延迟时间
+
+#### `deleteCloudRunService`
+**功能**: 删除云托管服务
+**参数**: 
+- `serviceName` (string): 服务名称
+
+#### `getCloudRunServiceDetail`
+**功能**: 获取云托管服务详情
+**参数**: 
+- `serviceName` (string): 服务名称
+
+### 🔧 版本管理
+
+#### `createCloudRunVersion`
+**功能**: 创建云托管服务版本
+**参数**: 
+- `serviceName` (string): 服务名称
+- `uploadType` (string): 上传类型 package/image/repository
+- `flowRatio` (number): 流量比例 0-100
+- `cpu` (string): CPU 规格
+- `memory` (string): 内存规格
+- `minReplicas` (number): 最小副本数
+- `maxReplicas` (number): 最大副本数
+- `containerPort` (number): 容器端口
+- `envVariables` (object): 环境变量
+- `customLogs` (string): 自定义日志路径
+- `initialDelaySeconds` (number): 初始延迟时间
+- `dockerfile` (string): Dockerfile 内容
+- `buildDir` (string): 构建目录路径
+- `codeDetail` (object): 代码详情
+
+#### `getCloudRunVersionList`
+**功能**: 获取云托管服务版本列表
+**参数**: 
+- `serviceName` (string): 服务名称
+- `offset` (number): 偏移量
+- `limit` (number): 返回数量限制
+
+#### `deleteCloudRunVersion`
+**功能**: 删除云托管服务版本
+**参数**: 
+- `serviceName` (string): 服务名称
+- `versionName` (string): 版本名称
+
+### 🚦 流量配置
+
+#### `updateCloudRunVersionFlowRatio`
+**功能**: 更新云托管服务版本流量配置
+**参数**: 
+- `serviceName` (string): 服务名称
+- `versionFlowItems` (array): 版本流量配置列表
+
+### 📊 监控运维
+
+#### `getCloudRunServiceLogs`
+**功能**: 获取云托管服务日志
+**参数**: 
+- `serviceName` (string): 服务名称
+- `versionName` (string): 版本名称
+- `startTime` (string): 开始时间
+- `endTime` (string): 结束时间
+- `limit` (number): 返回日志条数限制
+- `orderBy` (string): 排序方式 asc/desc
+- `orderType` (string): 排序字段 timestamp
+
+#### `getCloudRunServiceEvent`
+**功能**: 获取云托管服务事件
+**参数**: 
+- `serviceName` (string): 服务名称
+- `versionName` (string): 版本名称
+- `startTime` (string): 开始时间
+- `endTime` (string): 结束时间
+- `limit` (number): 返回事件条数限制
+
+---
+
 ## 🌐 静态托管
 
 ### 📤 文件管理
@@ -360,6 +479,9 @@ CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种
 - 🔍 **"查询环境信息"** → AI 调用 `envQuery` 工具  
 - 🚀 **"部署应用"** → AI 调用相关的部署工具
 - 📊 **"查询数据库"** → AI 调用 `queryDocuments` 工具
+- ⚡ **"创建云函数"** → AI 调用 `createFunction` 工具
+- 🚀 **"创建云托管服务"** → AI 调用 `createCloudRunService` 工具
+- 📦 **"部署云托管版本"** → AI 调用 `createCloudRunVersion` 工具
 - 📱 **"上传小程序"** → AI 调用 `uploadMiniprogramCode` 工具
 
 ## ⚙️ 配置说明
@@ -405,12 +527,13 @@ MCP 工具通过以下配置添加到你的 AI IDE 中：
 
 ## 🔄 工具优化
 
-为了提供更好的使用体验，我们将原来的工具优化并新增了小程序发布功能，现在共有 43 个工具：
+为了提供更好的使用体验，我们将原来的工具优化并新增了小程序发布和云托管功能，现在共有 56 个工具：
 
 - ✅ **envQuery**: 合并了 `listEnvs` + `getEnvInfo` + `getEnvAuthDomains`
 - ✅ **envDomainManagement**: 合并了 `createEnvDomain` + `deleteEnvDomain`  
 - ✅ **collectionQuery**: 合并了 `checkCollectionExists` + `describeCollection` + `listCollections`
 - ✅ **小程序发布**: 新增了 `uploadMiniprogramCode` + `previewMiniprogramCode` + `buildMiniprogramNpm` + `getMiniprogramProjectConfig`
 - 🆕 **小程序调试**: 新增了 `getMiniprogramSourceMap` + `checkMiniprogramCodeQuality` + `packMiniprogramNpmManually`
+- 🆕 **云托管服务**: 新增了 13 个云托管工具，涵盖服务管理、版本管理、流量配置、监控运维
 
-通过合并相关功能和新增小程序完整工具链，提供了从开发到调试的完整云开发体验。 
+通过合并相关功能和新增小程序、云托管完整工具链，提供了从开发到调试的完整云开发体验。 
