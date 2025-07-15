@@ -1,6 +1,6 @@
 # MCP 工具
 
-CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种操作。目前共有 **43 个工具**，涵盖环境管理、数据库操作、云函数管理、静态托管、小程序发布等核心功能。
+CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种操作。目前共有 **45 个工具**，涵盖环境管理、数据库操作、云函数管理、静态托管、安全规则、小程序发布等核心功能。
 
 📋 **完整工具规格**: [查看 tools.json](https://cnb.cool/tencent/cloud/cloudbase/CloudBase-AI-ToolKit/-/git/raw/main/scripts/tools.json)
 
@@ -12,6 +12,7 @@ CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种
 | 🗄️ [数据库操作](#数据库操作) | 11 个 | 集合管理、文档 CRUD、索引操作 |
 | ⚡ [云函数管理](#云函数管理) | 9 个 | 函数创建、更新、调用、日志 |
 | 🌐 [静态托管](#静态托管) | 6 个 | 文件上传、管理、域名配置 |
+| 🔒 [安全规则](#安全规则) | 2 个 | 数据库简易权限、云函数权限、云存储权限 |
 | 📁 [文件操作](#文件操作) | 2 个 | 文件下载、云存储上传 |
 | 📱 [小程序发布](#小程序发布) | 7 个 | 小程序上传、预览、构建、配置、调试、质量检查 |
 | 🛠️ [工具支持](#工具支持) | 4 个 | 模板下载、知识库搜索、联网搜索、交互对话 |
@@ -230,6 +231,33 @@ CloudBase AI ToolKit 提供了完整的 MCP 工具集，支持云开发的各种
 **功能**: 统一的域名管理工具，支持绑定、解绑、查询和修改域名配置
 **参数**: 
 - `action` (string): create/delete/check/modify
+
+---
+
+## 🔒 安全规则
+
+### 🛡️ 权限管理
+
+#### `readSecurityRules`
+**功能**: 读取云开发服务的安全规则配置，包括数据库简易权限、云函数权限和云存储权限
+**参数**: 
+- `serviceType` (enum): 服务类型 - database/functions/storage
+- `resourceName` (string,可选): 资源名称（数据库为集合名称，云函数为函数名称，云存储为存储桶或路径）
+
+#### `writeSecurityRules`
+**功能**: 设置云开发服务的安全规则配置，支持批量设置多个资源的权限
+**参数**: 
+- `serviceType` (enum): 服务类型 - database/functions/storage
+- `rules` (array): 权限规则列表
+  - 数据库规则: `{ collectionName: string, permission: 'none'|'read'|'write'|'admin' }`
+  - 云函数规则: `{ functionName: string, permission: 'none'|'read'|'write'|'admin' }`
+  - 云存储规则: `{ bucket?: string, path?: string, permission: 'none'|'read'|'write'|'admin' }`
+
+**权限级别说明**:
+- `none`: 无权限
+- `read`: 只读权限
+- `write`: 读写权限
+- `admin`: 管理员权限
 
 ---
 
