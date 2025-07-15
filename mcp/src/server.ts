@@ -11,6 +11,7 @@ import { registerInteractiveTools } from "./tools/interactive.js";
 import { registerMiniprogramTools } from "./tools/miniprogram.js";
 import { wrapServerWithTelemetry } from "./utils/tool-wrapper.js";
 import { registerGatewayTools } from "./tools/gateway.js";
+import { registerSecurityTools } from "./tools/security.js";
 import { CloudBaseOptions } from "./types.js";
 
 // 插件定义
@@ -20,7 +21,7 @@ interface PluginDefinition {
 }
 
 // 默认插件列表
-const DEFAULT_PLUGINS = ['env', 'database', 'functions', 'hosting', 'storage', 'setup', 'interactive', 'rag', 'gateway', 'download'];
+const DEFAULT_PLUGINS = ['env', 'database', 'functions', 'hosting', 'storage', 'setup', 'interactive', 'rag', 'gateway', 'download', 'security'];
 
 // 可用插件映射
 const AVAILABLE_PLUGINS: Record<string, PluginDefinition> = {
@@ -35,6 +36,7 @@ const AVAILABLE_PLUGINS: Record<string, PluginDefinition> = {
   download: { name: 'download', register: registerDownloadTools },
   gateway: { name: 'gateway', register: registerGatewayTools },
   miniprogram: { name: 'miniprogram', register: registerMiniprogramTools },
+  security: { name: 'security', register: registerSecurityTools },
 };
 
 /**
