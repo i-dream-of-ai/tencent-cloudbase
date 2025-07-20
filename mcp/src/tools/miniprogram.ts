@@ -1,7 +1,16 @@
 import { z } from "zod";
 import { ExtendedMcpServer } from "../server.js";
 import { error, info } from "../utils/logger.js";
-import ci from "miniprogram-ci";
+
+// 动态导入miniprogram-ci以避免直接依赖
+async function loadMiniprogramCi() {
+  try {
+    const ci = await import("miniprogram-ci");
+    return ci.default || ci;
+  } catch (err) {
+    throw new Error("miniprogram-ci is not installed. Please install it with: npm install miniprogram-ci");
+  }
+}
 
 // 获取私钥配置
 function getPrivateKeyConfig() {
@@ -20,6 +29,7 @@ function getPrivateKeyConfig() {
 
 // 创建项目配置
 async function createProject(projectPath: string, appId: string, type: "miniProgram" | "miniGame" = "miniProgram") {
+  const ci = await loadMiniprogramCi();
   const { privateKey, privateKeyPath } = getPrivateKeyConfig();
   
   return new ci.Project({
@@ -75,6 +85,7 @@ export function registerMiniprogramTools(server: ExtendedMcpServer) {
       try {
         const project = await createProject(projectPath, appId, type);
         
+        const ci = await loadMiniprogramCi();
         const result = await ci.upload({
           project,
           version,
@@ -171,6 +182,7 @@ export function registerMiniprogramTools(server: ExtendedMcpServer) {
       try {
         const project = await createProject(projectPath, appId, type);
         
+        const ci = await loadMiniprogramCi();
         const result = await ci.preview({
           project,
           version: "preview",
@@ -254,6 +266,7 @@ export function registerMiniprogramTools(server: ExtendedMcpServer) {
       try {
         const project = await createProject(projectPath, appId, type);
         
+        const ci = await loadMiniprogramCi();
         const result = await ci.packNpm(project, {
           ignores: ignores || ["pack_npm_ignore_list"],
           reporter: (infos: any) => {
@@ -381,6 +394,7 @@ export function registerMiniprogramTools(server: ExtendedMcpServer) {
       try {
         const project = await createProject(projectPath, appId, type);
         
+        const ci = await loadMiniprogramCi();
         const result = await ci.getDevSourceMap({
           project,
           robot,
@@ -449,6 +463,7 @@ export function registerMiniprogramTools(server: ExtendedMcpServer) {
       try {
         const project = await createProject(projectPath, appId, type);
         
+        const ci = await loadMiniprogramCi();
         const result = await (ci as any).checkCodeQuality({
           project,
           saveReportPath
@@ -511,6 +526,7 @@ export function registerMiniprogramTools(server: ExtendedMcpServer) {
       ignores?: string[];
     }) => {
       try {
+        const ci = await loadMiniprogramCi();
         const result = await ci.packNpmManually({
           packageJsonPath,
           miniprogramNpmDistDir,
