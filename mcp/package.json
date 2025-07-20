@@ -64,6 +64,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "fd-slicer": "^1.1.0",
+    "miniprogram-ci": "^1.8.18",
     "open": "^10.1.2",
     "punycode": "^2.3.1",
     "unzipper": "^0.12.3",
@@ -111,16 +112,14 @@
     "@babel/helpers": "^7.26.10",
     "@babel/runtime": "^7.26.10",
     "http-cache-semantics": "^4.1.1",
-    "babel-traverse": "7.23.6",
-    "babel-core": "6.26.3",
-    "babel-template": "6.26.0",
-    "babel-helpers": "6.24.1",
-    "html-minifier": "4.0.0"
+    "html-minifier": "4.0.0",
+    "request": "2.88.2",
+    "got": "11.8.6",
+    "semver": "^7.5.4",
+    "glob": "^8.1.0",
+    "braces": "^3.0.3"
   },
   "resolutions": {
-    "babel-traverse": "7.23.6",
-    "babel-core": "6.26.3",
-    "got": "11.8.6",
     "request": "2.88.2"
   }
 }
