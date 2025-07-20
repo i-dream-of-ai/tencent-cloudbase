@@ -120,6 +120,22 @@
     "braces": "^3.0.3"
   },
   "resolutions": {
-    "request": "2.88.2"
+    "request": "2.88.2",
+    "babel-traverse": "^7.24.0",
+    "babel-core": "^7.24.0", 
+    "babel-template": "^7.24.0",
+    "babel-helpers": "^7.24.0",
+    "babel-register": "^7.24.0",
+    "minimatch": "^9.0.3",
+    "semver": "^7.5.4",
+    "glob": "^10.3.10",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.24.0",
+    "got": "^12.6.1",
+    "jpeg-js": "^0.4.4",
+    "phin": "^3.7.1",
+    "css-what": "^6.1.0",
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.31"
   }
 }
