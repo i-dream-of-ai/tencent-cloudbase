@@ -367,35 +367,72 @@ function filterFilesByIDE(files: string[], ide: string): string[] {
   });
   
   // 保留项目基础结构文件（非IDE特定文件）
+  // 根据模板类型保留相应的基础文件
   const baseFiles = [
     "README.md",
     "package.json",
     "package-lock.json",
+    ".gitignore"
+  ];
+  
+  // 通用配置文件
+  const commonConfigFiles = [
     "tsconfig.json",
     "vite.config.ts",
     "webpack.config.js",
-    "src/",
-    "public/",
-    "dist/",
-    "node_modules/",
-    ".gitignore",
     ".env",
     ".env.local",
-    ".env.production",
-    "index.html",
-    "main.js",
-    "main.ts",
-    "App.js",
-    "App.tsx",
-    "App.vue"
+    ".env.production"
   ];
   
+  // 保留基础文件
   baseFiles.forEach(baseFile => {
     files.forEach(file => {
-      if (file === baseFile || file.startsWith(baseFile)) {
+      if (file === baseFile) {
         keepFiles.add(file);
       }
     });
+  });
+  
+  // 保留通用配置文件（如果存在）
+  commonConfigFiles.forEach(configFile => {
+    files.forEach(file => {
+      if (file === configFile) {
+        keepFiles.add(file);
+      }
+    });
+  });
+  
+  // 保留所有非IDE配置的目录和文件
+  // 排除已知的IDE配置目录
+  const ideDirectories = [
+    ".cursor/", ".windsurf/", ".codebuddy/", ".claude/", ".cline/",
+    ".gemini/", ".opencode/", ".qwen/", ".comate/", ".codex/",
+    ".augment/", ".github/", ".roo/", ".lingma/", ".trae/",
+    ".vscode/", ".clinerules/", ".opencode/", ".qwen/"
+  ];
+  
+  files.forEach(file => {
+    // 如果文件不在IDE配置目录中，且不是IDE特定的配置文件，则保留
+    const isInIDEDirectory = ideDirectories.some(ideDir => file.startsWith(ideDir));
+    const isIDEConfigFile = file.includes("CLAUDE.md") || 
+                           file.includes("GEMINI.md") || 
+                           file.includes("QWEN.md") ||
+                           file.includes("OPENCODE.md") ||
+                           file.includes("AGENTS.md") ||
+                           file.includes("copilot-instructions.md") ||
+                           file.includes("cloudbase.md") ||
+                           file.includes("cloudbase-rules.mdc") ||
+                           file.includes("cloudbase-rules.md") ||
+                           file.includes(".mcp.json") ||
+                           file.includes("mcp.json") ||
+                           file.includes(".cursorrules") ||
+                           file.includes(".augment-guidelines") ||
+                           file.includes(".opencode.json");
+    
+    if (!isInIDEDirectory && !isIDEConfigFile) {
+      keepFiles.add(file);
+    }
   });
   
   return Array.from(keepFiles);
