@@ -102,8 +102,8 @@ const IDE_FILE_MAPPINGS: Record<string, string[]> = {
     ".comate/mcp.json"
   ],
   "openai-codex-cli": [
-    ".codex/rules/cloudbase-rules.md",
-    ".codex/config.toml"
+    ".codex/config.toml",
+    "AGENTS.md",
   ],
   "augment-code": [
     ".augment-guidelines"

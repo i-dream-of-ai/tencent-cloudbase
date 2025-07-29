@@ -59,6 +59,7 @@
 > - 需求、设计、任务分明，自动生成 requirements.md、design.md、tasks.md
 > - 摆脱“拉霸式” vibe coding，开发过程可控、可追溯
 > - 让 AI 协助梳理需求、设计方案、拆分任务，人类专注决策与评审
+- **Spec 工作流已内置在云开发 AI 规则中**，下载最新模板或让 AI 在当前项目下载云开发 AI 规则即可获取
 
 ---
 🚩 **快速上手 CloudBase AI ToolKit**
@@ -90,6 +91,8 @@
 下载React云开发模板，只包含WindSurf配置
 下载通用云开发模板，只包含Claude Code配置
 ```
+
+支持的IDE类型：cursor、windsurf、codebuddy、claude-code、cline、gemini-cli、opencode、qwen-code、baidu-comate、openai-codex-cli、augment-code、github-copilot、roocode、tongyi-lingma、trae、vscode
 
 3. **可选模板类型**  
 - 小程序云开发模板
