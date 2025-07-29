@@ -98,6 +98,7 @@ const IDE_FILE_MAPPINGS: Record<string, string[]> = {
   ],
   "baidu-comate": [
     ".comate/rules/cloudbase-rules.mdr",
+    ".comate/rules/cloudbaase-rules.mdr",
     ".comate/mcp.json"
   ],
   "openai-codex-cli": [
