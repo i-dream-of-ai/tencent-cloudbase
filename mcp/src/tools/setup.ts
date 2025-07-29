@@ -98,12 +98,12 @@ const ALL_IDE_FILES = [
   // GitHub Copilot
   ".github/copilot-instructions.md",
   // RooCode
-  ".roo/rules/cloudbase.md",
+  ".roo/rules/cloudbaase-rules.md",
   ".roo/mcp.json",
   // 通义灵码
-  ".lingma/cloudbase.md",
+  ".lingma/rules/cloudbaase-rules.md",
   // Trae
-  ".trae/rules/cloudbase.md",
+  ".trae/rules/cloudbase-rules.md",
   // VSCode
   ".vscode/mcp.json",
   ".vscode/settings.json"
@@ -154,14 +154,14 @@ const IDE_FILE_MAPPINGS: Record<string, string[]> = {
     ".github/copilot-instructions.md"
   ],
   "roocode": [
-    ".roo/rules/cloudbase.md",
+    ".roo/rules/cloudbaase-rules.md",
     ".roo/mcp.json"
   ],
   "tongyi-lingma": [
-    ".lingma/cloudbase.md"
+    ".lingma/rules/cloudbaase-rules.md"
   ],
   "trae": [
-    ".trae/rules/cloudbase.md"
+    ".trae/rules/cloudbase-rules.md"
   ],
   "vscode": [
     ".vscode/mcp.json",
@@ -325,94 +325,11 @@ function filterFilesByIDE(files: string[], ide: string): string[] {
     return files; // 如果找不到映射，返回所有文件
   }
   
-  // 需要保留的文件
-  const keepFiles = new Set<string>();
+  // 计算需要排除的IDE文件（除了当前IDE需要的文件）
+  const filesToExclude = ALL_IDE_FILES.filter(file => !ideFiles.includes(file));
   
-  // 添加IDE特定的配置文件
-  ideFiles.forEach(configFile => {
-    keepFiles.add(configFile);
-  });
-  
-  // 保留所有非IDE配置的项目文件
-  files.forEach(file => {
-    // 检查是否是IDE配置文件
-    const isIDEConfigFile = ALL_IDE_FILES.includes(file);
-    
-    if (!isIDEConfigFile) {
-      keepFiles.add(file);
-    }
-  });
-  
-  // 保留项目基础结构文件（非IDE特定文件）
-  // 根据模板类型保留相应的基础文件
-  const baseFiles = [
-    "README.md",
-    "package.json",
-    "package-lock.json",
-    ".gitignore"
-  ];
-  
-  // 通用配置文件
-  const commonConfigFiles = [
-    "tsconfig.json",
-    "vite.config.ts",
-    "webpack.config.js",
-    ".env",
-    ".env.local",
-    ".env.production"
-  ];
-  
-  // 保留基础文件
-  baseFiles.forEach(baseFile => {
-    files.forEach(file => {
-      if (file === baseFile) {
-        keepFiles.add(file);
-      }
-    });
-  });
-  
-  // 保留通用配置文件（如果存在）
-  commonConfigFiles.forEach(configFile => {
-    files.forEach(file => {
-      if (file === configFile) {
-        keepFiles.add(file);
-      }
-    });
-  });
-  
-  // 保留所有非IDE配置的目录和文件
-  // 排除已知的IDE配置目录
-  const ideDirectories = [
-    ".cursor/", ".windsurf/", ".codebuddy/", ".claude/", ".cline/",
-    ".gemini/", ".opencode/", ".qwen/", ".comate/", ".codex/",
-    ".augment/", ".github/", ".roo/", ".lingma/", ".trae/",
-    ".vscode/", ".clinerules/", ".opencode/", ".qwen/"
-  ];
-  
-  files.forEach(file => {
-    // 如果文件不在IDE配置目录中，且不是IDE特定的配置文件，则保留
-    const isInIDEDirectory = ideDirectories.some(ideDir => file.startsWith(ideDir));
-    const isIDEConfigFile = file.includes("CLAUDE.md") || 
-                           file.includes("GEMINI.md") || 
-                           file.includes("QWEN.md") ||
-                           file.includes("OPENCODE.md") ||
-                           file.includes("AGENTS.md") ||
-                           file.includes("copilot-instructions.md") ||
-                           file.includes("cloudbase.md") ||
-                           file.includes("cloudbase-rules.mdc") ||
-                           file.includes("cloudbase-rules.md") ||
-                           file.includes(".mcp.json") ||
-                           file.includes("mcp.json") ||
-                           file.includes(".cursorrules") ||
-                           file.includes(".augment-guidelines") ||
-                           file.includes(".opencode.json");
-    
-    if (!isInIDEDirectory && !isIDEConfigFile) {
-      keepFiles.add(file);
-    }
-  });
-  
-  return Array.from(keepFiles);
+  // 排除不需要的IDE配置文件，保留其他所有文件
+  return files.filter(file => !filesToExclude.includes(file));
 }
 
 export function registerSetupTools(server: ExtendedMcpServer) {
