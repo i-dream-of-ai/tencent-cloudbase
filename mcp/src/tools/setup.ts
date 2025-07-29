@@ -66,52 +66,8 @@ interface IDEMapping {
   directories?: string[];
 }
 
-// 所有IDE配置文件的完整列表
-const ALL_IDE_FILES = [
-  // Cursor
-  ".cursor/rules/cloudbase-rules.mdc",
-  ".cursor/mcp.json",
-  // WindSurf
-  ".windsurf/rules/cloudbase-rules.md",
-  // CodeBuddy
-  ".rules/cloudbase-rules.md",
-  // Claude Code
-  "CLAUDE.md",
-  ".mcp.json",
-  // CLINE
-  ".clinerules/cloudbase-rules.mdc",
-  // Gemini CLI
-  ".gemini/GEMINI.md",
-  ".gemini/settings.json",
-  // OpenCode
-  ".opencode.json",
-  // Qwen Code
-  ".qwen/QWEN.md",
-  ".qwen/settings.json",
-  // 百度Comate
-  ".comate/rules/cloudbase-rules.md",
-  ".comate/mcp.json",
-  // OpenAI Codex CLI
-  ".codex/rules/cloudbase-rules.md",
-  // Augment Code
-  ".augment-guidelines",
-  // GitHub Copilot
-  ".github/copilot-instructions.md",
-  // RooCode
-  ".roo/rules/cloudbaase-rules.md",
-  ".roo/mcp.json",
-  // 通义灵码
-  ".lingma/rules/cloudbaase-rules.md",
-  // Trae
-  ".trae/rules/cloudbase-rules.md",
-  // VSCode
-  ".vscode/mcp.json",
-  ".vscode/settings.json"
-];
-
 // IDE到文件的映射关系
 const IDE_FILE_MAPPINGS: Record<string, string[]> = {
-  "all": ALL_IDE_FILES,
   "cursor": [
     ".cursor/rules/cloudbase-rules.mdc",
     ".cursor/mcp.json"
@@ -168,6 +124,14 @@ const IDE_FILE_MAPPINGS: Record<string, string[]> = {
     ".vscode/settings.json"
   ]
 };
+
+// 所有IDE配置文件的完整列表 - 通过IDE_FILE_MAPPINGS计算得出
+const ALL_IDE_FILES = Array.from(new Set(
+  Object.values(IDE_FILE_MAPPINGS).flat()
+));
+
+// 为"all"选项添加映射
+IDE_FILE_MAPPINGS["all"] = ALL_IDE_FILES;
 
 // IDE描述映射
 const IDE_DESCRIPTIONS: Record<string, string> = {
