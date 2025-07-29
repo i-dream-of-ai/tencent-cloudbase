@@ -97,11 +97,12 @@ const IDE_FILE_MAPPINGS: Record<string, string[]> = {
     ".qwen/settings.json"
   ],
   "baidu-comate": [
-    ".comate/rules/cloudbase-rules.md",
+    ".comate/rules/cloudbase-rules.mdr",
     ".comate/mcp.json"
   ],
   "openai-codex-cli": [
-    ".codex/rules/cloudbase-rules.md"
+    ".codex/rules/cloudbase-rules.md",
+    ".codex/config.toml"
   ],
   "augment-code": [
     ".augment-guidelines"
