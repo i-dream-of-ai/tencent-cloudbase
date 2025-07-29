@@ -66,143 +66,129 @@ interface IDEMapping {
   directories?: string[];
 }
 
-const IDE_MAPPINGS: IDEMapping[] = [
-  {
-    ide: "cursor",
-    description: "Cursor AI编辑器",
-    configFiles: [
-      ".cursor/rules/cloudbase-rules.mdc",
-      ".cursor/mcp.json"
-    ],
-    directories: [".cursor/"]
-  },
-  {
-    ide: "windsurf",
-    description: "WindSurf AI编辑器",
-    configFiles: [
-      ".windsurf/rules/cloudbase-rules.md"
-    ],
-    directories: [".windsurf/"]
-  },
-  {
-    ide: "codebuddy",
-    description: "CodeBuddy AI编辑器",
-    configFiles: [
-      ".rules/cloudbase-rules.md"
-    ],
-    directories: [".rules/"]
-  },
-  {
-    ide: "claude-code",
-    description: "Claude Code AI编辑器",
-    configFiles: [
-      "CLAUDE.md",
-      ".mcp.json"
-    ],
-    directories: [""]
-  },
-  {
-    ide: "cline",
-    description: "Cline AI编辑器",
-    configFiles: [
-      ".clinerules/cloudbase-rules.mdc"
-    ],
-    directories: [".clinerules/"]
-  },
-  {
-    ide: "gemini-cli",
-    description: "Gemini CLI",
-    configFiles: [
-      ".gemini/GEMINI.md",
-      ".gemini/settings.json"
-    ],
-    directories: [".gemini/"]
-  },
-  {
-    ide: "opencode",
-    description: "OpenCode AI编辑器",
-    configFiles: [
-      ".opencode.json"
-    ],
-    directories: [""]
-  },
-  {
-    ide: "qwen-code",
-    description: "通义灵码",
-    configFiles: [
-      ".qwen/QWEN.md",
-      ".qwen/settings.json"
-    ],
-    directories: [".qwen/"]
-  },
-  {
-    ide: "baidu-comate",
-    description: "百度Comate",
-    configFiles: [
-      ".comate/rules/cloudbaase-rules.mdr",
-      ".comate/mcp.json"
-    ],
-    directories: [".comate/"]
-  },
-  {
-    ide: "openai-codex-cli",
-    description: "OpenAI Codex CLI",
-    configFiles: [
-      ".codex/rules/cloudbase-rules.md"
-    ],
-    directories: [".codex/"]
-  },
-  {
-    ide: "augment-code",
-    description: "Augment Code",
-    configFiles: [
-      ".augment-guidelines"
-    ],
-    directories: [""]
-  },
-  {
-    ide: "github-copilot",
-    description: "GitHub Copilot",
-    configFiles: [
-      ".github/copilot-instructions.md"
-    ],
-    directories: [".github/"]
-  },
-  {
-    ide: "roocode",
-    description: "RooCode AI编辑器",
-    configFiles: [
-      ".roo/rules/cloudbaase-rules.md",
-      ".roo/mcp.json"
-    ],
-    directories: [".roo/"]
-  },
-  {
-    ide: "tongyi-lingma",
-    description: "通义灵码",
-    configFiles: [
-      ".lingma/rules/cloudbaase-rules.md"
-    ],
-    directories: [".lingma/"]
-  },
-  {
-    ide: "trae",
-    description: "Trae AI编辑器",
-    configFiles: [
-      ".trae/rules/cloudbase-rules.md"
-    ],
-    directories: [".trae/"]
-  },
-  {
-    ide: "vscode",
-    description: "Visual Studio Code",
-    configFiles: [
-      ".vscode/mcp.json",
-      ".vscode/settings.json"
-    ],
-    directories: [".vscode/"]
-  }
+// 所有IDE配置文件的完整列表
+const ALL_IDE_FILES = [
+  // Cursor
+  ".cursor/rules/cloudbase-rules.mdc",
+  ".cursor/mcp.json",
+  // WindSurf
+  ".windsurf/rules/cloudbase-rules.md",
+  // CodeBuddy
+  ".rules/cloudbase-rules.md",
+  // Claude Code
+  "CLAUDE.md",
+  ".mcp.json",
+  // CLINE
+  ".clinerules/cloudbase-rules.mdc",
+  // Gemini CLI
+  ".gemini/GEMINI.md",
+  ".gemini/settings.json",
+  // OpenCode
+  ".opencode.json",
+  // Qwen Code
+  ".qwen/QWEN.md",
+  ".qwen/settings.json",
+  // 百度Comate
+  ".comate/rules/cloudbase-rules.md",
+  ".comate/mcp.json",
+  // OpenAI Codex CLI
+  ".codex/rules/cloudbase-rules.md",
+  // Augment Code
+  ".augment-guidelines",
+  // GitHub Copilot
+  ".github/copilot-instructions.md",
+  // RooCode
+  ".roo/rules/cloudbase.md",
+  ".roo/mcp.json",
+  // 通义灵码
+  ".lingma/cloudbase.md",
+  // Trae
+  ".trae/rules/cloudbase.md",
+  // VSCode
+  ".vscode/mcp.json",
+  ".vscode/settings.json"
 ];
+
+// IDE到文件的映射关系
+const IDE_FILE_MAPPINGS: Record<string, string[]> = {
+  "all": ALL_IDE_FILES,
+  "cursor": [
+    ".cursor/rules/cloudbase-rules.mdc",
+    ".cursor/mcp.json"
+  ],
+  "windsurf": [
+    ".windsurf/rules/cloudbase-rules.md"
+  ],
+  "codebuddy": [
+    ".rules/cloudbase-rules.md"
+  ],
+  "claude-code": [
+    "CLAUDE.md",
+    ".mcp.json"
+  ],
+  "cline": [
+    ".clinerules/cloudbase-rules.mdc"
+  ],
+  "gemini-cli": [
+    ".gemini/GEMINI.md",
+    ".gemini/settings.json"
+  ],
+  "opencode": [
+    ".opencode.json"
+  ],
+  "qwen-code": [
+    ".qwen/QWEN.md",
+    ".qwen/settings.json"
+  ],
+  "baidu-comate": [
+    ".comate/rules/cloudbase-rules.md",
+    ".comate/mcp.json"
+  ],
+  "openai-codex-cli": [
+    ".codex/rules/cloudbase-rules.md"
+  ],
+  "augment-code": [
+    ".augment-guidelines"
+  ],
+  "github-copilot": [
+    ".github/copilot-instructions.md"
+  ],
+  "roocode": [
+    ".roo/rules/cloudbase.md",
+    ".roo/mcp.json"
+  ],
+  "tongyi-lingma": [
+    ".lingma/cloudbase.md"
+  ],
+  "trae": [
+    ".trae/rules/cloudbase.md"
+  ],
+  "vscode": [
+    ".vscode/mcp.json",
+    ".vscode/settings.json"
+  ]
+};
+
+// IDE描述映射
+const IDE_DESCRIPTIONS: Record<string, string> = {
+  "all": "所有IDE配置",
+  "cursor": "Cursor AI编辑器",
+  "windsurf": "WindSurf AI编辑器",
+  "codebuddy": "CodeBuddy AI编辑器",
+  "claude-code": "Claude Code AI编辑器",
+  "cline": "Cline AI编辑器",
+  "gemini-cli": "Gemini CLI",
+  "opencode": "OpenCode AI编辑器",
+  "qwen-code": "通义灵码",
+  "baidu-comate": "百度Comate",
+  "openai-codex-cli": "OpenAI Codex CLI",
+  "augment-code": "Augment Code",
+  "github-copilot": "GitHub Copilot",
+  "roocode": "RooCode AI编辑器",
+  "tongyi-lingma": "通义灵码",
+  "trae": "Trae AI编辑器",
+  "vscode": "Visual Studio Code"
+};
 
 // 下载文件到临时目录
 async function downloadFile(url: string, filePath: string): Promise<void> {
@@ -334,35 +320,26 @@ function filterFilesByIDE(files: string[], ide: string): string[] {
     return files; // 返回所有文件
   }
   
-  const mapping = IDE_MAPPINGS.find(m => m.ide === ide);
-  if (!mapping) {
+  const ideFiles = IDE_FILE_MAPPINGS[ide];
+  if (!ideFiles) {
     return files; // 如果找不到映射，返回所有文件
   }
   
-  // 需要保留的文件和目录
+  // 需要保留的文件
   const keepFiles = new Set<string>();
   
   // 添加IDE特定的配置文件
-  mapping.configFiles.forEach(configFile => {
+  ideFiles.forEach(configFile => {
     keepFiles.add(configFile);
   });
   
-  // 添加IDE特定的目录
-  mapping.directories?.forEach(dir => {
-    if (dir === "") {
-      // 根目录，保留所有根目录文件
-      files.forEach(file => {
-        if (!file.includes('/') && !file.includes('\\')) {
-          keepFiles.add(file);
-        }
-      });
-    } else {
-      // 特定目录，保留该目录下的所有文件
-      files.forEach(file => {
-        if (file.startsWith(dir) || file === dir.slice(0, -1)) {
-          keepFiles.add(file);
-        }
-      });
+  // 保留所有非IDE配置的项目文件
+  files.forEach(file => {
+    // 检查是否是IDE配置文件
+    const isIDEConfigFile = ALL_IDE_FILES.includes(file);
+    
+    if (!isIDEConfigFile) {
+      keepFiles.add(file);
     }
   });
   
@@ -527,7 +504,7 @@ export function registerSetupTools(server: ExtendedMcpServer) {
           }
 
           // 添加IDE过滤信息
-          const ideInfo = ide === "all" ? "所有IDE配置" : `${IDE_MAPPINGS.find(m => m.ide === ide)?.description || ide}`;
+          const ideInfo = IDE_DESCRIPTIONS[ide] || ide;
           results.push(`✅ ${templateConfig.description} (${ideInfo}) 同步完成`);
           results.push(`📁 临时目录: ${extractDir}`);
           results.push(`🔍 文件过滤: ${extractedFiles.length} → ${filteredFiles.length} 个文件`);
@@ -546,7 +523,7 @@ export function registerSetupTools(server: ExtendedMcpServer) {
           }
         } else {
           finalFiles = filteredFiles.map(relativePath => path.join(extractDir, relativePath));
-          const ideInfo = ide === "all" ? "所有IDE配置" : `${IDE_MAPPINGS.find(m => m.ide === ide)?.description || ide}`;
+          const ideInfo = IDE_DESCRIPTIONS[ide] || ide;
           results.push(`✅ ${templateConfig.description} (${ideInfo}) 下载完成`);
           results.push(`📁 保存在临时目录: ${extractDir}`);
           results.push(`🔍 文件过滤: ${extractedFiles.length} → ${filteredFiles.length} 个文件`);
