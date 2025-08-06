@@ -1566,7 +1566,46 @@ export function registerDatabaseTools(server: ExtendedMcpServer) {
       title: "修改数据模型",
       description: "基于Mermaid classDiagram创建或更新数据模型。支持创建新模型和更新现有模型结构。内置异步任务监控，自动轮询直至完成或超时。",
       inputSchema: {
-        mermaidDiagram: z.string().describe("Mermaid classDiagram代码，描述数据模型结构"),
+        mermaidDiagram: z.string().describe(`Mermaid classDiagram代码，描述数据模型结构。
+示例：
+classDiagram
+    class Student {
+        name: string <<姓名>>
+        age: number = 18 <<年龄>>
+        gender: x-enum = "男" <<性别>>
+        classId: string <<班级ID>>
+        identityId: string <<身份ID>>
+        course: Course[] <<课程>>
+        required() ["name"]
+        unique() ["name"]
+        enum_gender() ["男", "女"]
+        display_field() "name"
+    }
+    class Class {
+        className: string <<班级名称>>
+        display_field() "className"
+    }
+    class Course {
+        name: string <<课程名称>>
+        students: Student[] <<学生>>
+        display_field() "name"
+    }
+    class Identity {
+        number: string <<证件号码>>
+        display_field() "number"
+    }
+
+    %% 关联关系
+    Student "1" --> "1" Identity : studentId
+    Student "n" --> "1" Class : student2class
+    Student "n" --> "m" Course : course
+    Student "n" <-- "m" Course : students
+    %% 类的命名
+    note for Student "学生模型"
+    note for Class "班级模型"
+    note for Course "课程模型"
+    note for Identity "身份模型"
+`),
         action: z.enum(["create", "update"]).optional().default("create").describe("操作类型：create=创建新模型"),
         publish: z.boolean().optional().default(false).describe("是否立即发布模型"),
         dbInstanceType: z.string().optional().default("MYSQL").describe("数据库实例类型")
