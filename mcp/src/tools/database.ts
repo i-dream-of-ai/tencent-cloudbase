@@ -1567,7 +1567,7 @@ export function registerDatabaseTools(server: ExtendedMcpServer) {
       description: "基于Mermaid classDiagram创建或更新数据模型。支持创建新模型和更新现有模型结构。内置异步任务监控，自动轮询直至完成或超时。",
       inputSchema: {
         mermaidDiagram: z.string().describe("Mermaid classDiagram代码，描述数据模型结构"),
-        action: z.enum(["create", "update"]).optional().default("create").describe("操作类型：create=创建新模型，update=更新现有模型"),
+        action: z.enum(["create", "update"]).optional().default("create").describe("操作类型：create=创建新模型"),
         publish: z.boolean().optional().default(false).describe("是否立即发布模型"),
         dbInstanceType: z.string().optional().default("MYSQL").describe("数据库实例类型")
       },
@@ -1586,19 +1586,6 @@ export function registerDatabaseTools(server: ExtendedMcpServer) {
       dbInstanceType?: string;
     }) => {
       try {
-        // 检查Mermaid转换功能是否可用
-        if (!mermaidToJsonSchema) {
-          return {
-            content: [{
-              type: "text",
-              text: JSON.stringify({
-                success: false,
-                error: "mermaidToJsonSchema function not available",
-                message: "Mermaid转换功能不可用，请确保@cloudbase/cals包正确安装"
-              }, null, 2)
-            }]
-          };
-        }
 
         const cloudbase = await getManager();
         let currentEnvId = await getEnvId(cloudBaseOptions);
@@ -1651,6 +1638,7 @@ export function registerDatabaseTools(server: ExtendedMcpServer) {
               type: "text",
               text: JSON.stringify({
                 success: false,
+                requestId: result.RequestId,
                 error: "No TaskId returned",
                 message: "创建任务失败，未返回任务ID"
               }, null, 2)
@@ -1688,6 +1676,7 @@ export function registerDatabaseTools(server: ExtendedMcpServer) {
             type: "text",
             text: JSON.stringify({
               success: status === 'success',
+              requestId: result.RequestId,
               taskId: taskId,
               models: models,
               successModels: successModels,
