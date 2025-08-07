@@ -7,7 +7,7 @@
                 "@cloudbase/cloudbase-mcp@latest"
             ],
             "env": {
-                "INTEGRATION_IDE": "cursor"
+                "INTEGRATION_IDE": "Cursor"
             }
         }
     }
