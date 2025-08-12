@@ -138,10 +138,12 @@ export async function _promptAndSetEnvironmentId(autoSelectSingle: boolean, serv
     selectedEnvId = result.data;
   }
 
-  // 4. 保存环境ID配置
-  if (selectedEnvId) {
+  // 4. 保存环境ID配置（仅在没有环境变量时）
+  if (selectedEnvId && !process.env.CLOUDBASE_ENVID) {
     await saveEnvIdToUserConfig(selectedEnvId);
     debug('环境ID已保存到配置文件:', selectedEnvId);
+  } else if (selectedEnvId) {
+    debug('环境ID已设置（跳过文件保存，使用环境变量）:', selectedEnvId);
   }
 
   return { selectedEnvId, cancelled: false };

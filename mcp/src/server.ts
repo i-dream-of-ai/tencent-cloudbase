@@ -14,6 +14,8 @@ import { wrapServerWithTelemetry } from "./utils/tool-wrapper.js";
 import { registerGatewayTools } from "./tools/gateway.js";
 import { registerInviteCodeTools } from "./tools/invite-code.js";
 import { CloudBaseOptions } from "./types.js";
+import { isCloudMode, enableCloudMode } from "./utils/cloud-mode.js";
+import { debug } from "./utils/logger.js";
 
 
 // 插件定义
@@ -24,6 +26,12 @@ interface PluginDefinition {
 
 // 默认插件列表
 const DEFAULT_PLUGINS = ['env', 'database', 'functions', 'hosting', 'storage', 'setup', 'interactive', 'rag', 'gateway', 'download', 'security-rule', 'invite-code'];
+
+// 云端模式下不兼容的插件
+const CLOUD_INCOMPATIBLE_PLUGINS = [
+  'interactive',  // Contains local server and file operations
+  'setup'        // Involves local configuration file operations
+];
 
 // 可用插件映射
 const AVAILABLE_PLUGINS: Record<string, PluginDefinition> = {
@@ -65,6 +73,18 @@ function parseEnabledPlugins(): string[] {
     enabledPlugins = enabledPlugins.filter(p => !disabledPlugins.includes(p));
   }
   
+  // 云端模式过滤不兼容插件
+  if (isCloudMode()) {
+    const originalCount = enabledPlugins.length;
+    enabledPlugins = enabledPlugins.filter(p => !CLOUD_INCOMPATIBLE_PLUGINS.includes(p));
+    const filteredCount = originalCount - enabledPlugins.length;
+    
+    if (filteredCount > 0) {
+      debug(`Cloud mode: filtered ${filteredCount} incompatible plugins:`, CLOUD_INCOMPATIBLE_PLUGINS.filter(p => DEFAULT_PLUGINS.includes(p)));
+    }
+    debug('Cloud mode: enabled plugins:', enabledPlugins);
+  }
+  
   return enabledPlugins;
 }
 
@@ -97,14 +117,21 @@ export function createCloudBaseMcpServer(options?: {
   name?: string;
   version?: string;
   enableTelemetry?: boolean;
+  cloudMode?: boolean;
   cloudBaseOptions?: CloudBaseOptions;
 }): ExtendedMcpServer {
   const {
     name = "cloudbase-mcp",
     version = "1.0.0",
     enableTelemetry = true,
+    cloudMode = false,
     cloudBaseOptions
   } = options ?? {};
+
+  // Enable cloud mode if specified via constructor
+  if (cloudMode) {
+    enableCloudMode();
+  }
 
   // Create server instance
   const server = new McpServer({

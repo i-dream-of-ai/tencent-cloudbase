@@ -59,7 +59,7 @@ class EnvironmentManager {
                 return this.cachedEnvId;
             }
 
-            // 2. 从配置文件读取
+            // 2. 从配置文件读取（仅在没有环境变量时）
             const fileEnvId = await loadEnvIdFromUserConfig();
             if (fileEnvId) {
                 debug('从配置文件读取到环境ID:', fileEnvId);
@@ -83,7 +83,7 @@ class EnvironmentManager {
         }
     }
 
-    // 统一设置缓存的方法
+    // 统一设置缓存的方法   
     private _setCachedEnvId(envId: string) {
         this.cachedEnvId = envId;
         process.env.CLOUDBASE_ENV_ID = envId;
@@ -93,9 +93,13 @@ class EnvironmentManager {
     // 手动设置环境ID（用于外部调用）
     async setEnvId(envId: string) {
         this._setCachedEnvId(envId);
-        // 同步保存到配置文件
-        await saveEnvIdToUserConfig(envId);
-        debug('手动设置环境ID并保存到文件:', envId);
+        // 只有在没有环境变量时才保存到配置文件，避免云端模式下的文件操作
+        if (!process.env.CLOUDBASE_ENV_ID) {
+            await saveEnvIdToUserConfig(envId);
+            debug('手动设置环境ID并保存到文件:', envId);
+        } else {
+            debug('手动设置环境ID（跳过文件保存，使用环境变量）:', envId);
+        }
     }
 }
 
@@ -138,12 +142,25 @@ export async function getCloudBaseManager(options: GetManagerOptions = {}): Prom
 
     try {
         const loginState = await getLoginState();
-        const {
-            envId: loginEnvId,
-            secretId,
-            secretKey,
-            token
-        } = loginState;
+        let secretId: string | undefined;
+        let secretKey: string | undefined;
+        let token: string | undefined;
+        let loginEnvId: string | undefined;
+
+        // Handle different login state structures
+        if (loginState && 'credential' in loginState) {
+            // New structure from environment variables
+            secretId = loginState.credential.secretId;
+            secretKey = loginState.credential.secretKey;
+            token = loginState.credential.token;
+        } else if (loginState) {
+            // Original AuthSupevisor structure
+            const originalLoginState = loginState as any;
+            secretId = originalLoginState.secretId;
+            secretKey = originalLoginState.secretKey;
+            token = originalLoginState.token;
+            loginEnvId = originalLoginState.envId;
+        }
 
         let finalEnvId: string | undefined;
         if (requireEnvId) {
