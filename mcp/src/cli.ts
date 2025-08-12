@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 
-
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { createCloudBaseMcpServer } from "./server.js";
 import { telemetryReporter, reportToolkitLifecycle } from "./utils/telemetry.js";
 import { info, warn } from './utils/logger.js';
-import { enableCloudMode, getCloudModeStatus } from './utils/cloud-mode.js';
 
 // 劫持 console.log/info/warn，防止污染 stdout 协议流
 const joinArgs = (...args: any[]) => args.map(a => {
@@ -22,23 +20,6 @@ console.log = (...args) => info(joinArgs(...args));
 console.info = (...args) => info(joinArgs(...args));
 console.warn = (...args) => warn(joinArgs(...args));
 // console.error 保持原样
-
-// Parse command line arguments for cloud mode (compatible with Node.js 18.15)
-const args = process.argv.slice(2);
-const hasCloudModeFlag = args.includes('--cloud-mode');
-
-// Enable cloud mode if specified
-if (hasCloudModeFlag) {
-  enableCloudMode();
-}
-
-// Log current mode status
-const modeStatus = getCloudModeStatus();
-if (modeStatus.enabled) {
-  info(`CloudBase MCP running in cloud mode (source: ${modeStatus.source})`);
-} else {
-  info('CloudBase MCP running in local mode');
-}
 
 // 记录启动时间
 const startTime = Date.now();
