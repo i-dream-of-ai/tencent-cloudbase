@@ -102,8 +102,8 @@ class Order {
 }`;
 
     const result2 = transform.mermaidToJsonSchema(complexMermaid2);
-    expect(result2.Order.properties.status.format).toBe('enum');
-    expect(result2.Order.properties.priority.format).toBe('enum');
+    expect(result2.Order.properties.status.format).toBe('x-enum');
+    expect(result2.Order.properties.priority.format).toBe('x-enum');
     console.log('    ✅ 枚举字段测试通过');
 
     // 测试用例3：多种数据类型
