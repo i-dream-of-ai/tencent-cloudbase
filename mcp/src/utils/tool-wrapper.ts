@@ -4,7 +4,14 @@ import { reportToolCall } from './telemetry.js';
 import { debug } from './logger.js';
 import { CloudBaseOptions } from '../types.js';
 import { getEnvId } from '../cloudbase-manager.js';
+import { shouldRegisterTool } from './cloud-mode.js';
 import os from 'os';
+
+// 扩展 McpServer 类型以包含 ide
+interface ExtendedMcpServer extends McpServer {
+  cloudBaseOptions?: CloudBaseOptions;
+  ide?: string;
+}
 
 /**
  * 工具包装器，为 MCP 工具添加数据上报功能
@@ -89,7 +96,7 @@ ${JSON.stringify(sanitizeArgs(args), null, 2)}
 /**
  * 创建包装后的处理函数，添加数据上报功能
  */
-function createWrappedHandler(name: string, handler: any, cloudBaseOptions?: CloudBaseOptions) {
+function createWrappedHandler(name: string, handler: any, server: ExtendedMcpServer) {
     return async (args: any) => {
         const startTime = Date.now();
         let success = false;
@@ -142,32 +149,39 @@ function createWrappedHandler(name: string, handler: any, cloudBaseOptions?: Clo
                 duration,
                 error: errorMessage,
                 inputParams: sanitizeArgs(args), // 添加入参上报
-                cloudBaseOptions // 传递 CloudBase 配置
+                cloudBaseOptions: server.cloudBaseOptions, // 传递 CloudBase 配置
+                ide: server.ide  || process.env.INTEGRATION_IDE // 传递集成IDE信息
             });
         }
     };
 }
 
 /**
- * 包装 MCP Server 的 registerTool 方法，添加数据上报功能
+ * 包装 MCP Server 的 registerTool 方法，添加数据上报功能和条件注册
  * @param server MCP Server 实例
  */
 export function wrapServerWithTelemetry(server: McpServer): void {
     // 保存原始的 registerTool 方法
     const originalRegisterTool = server.registerTool.bind(server);
 
-    // 重写 registerTool 方法，添加数据上报功能
+    // Override the registerTool method to add telemetry and conditional registration
     server.registerTool = function(toolName: string, toolConfig: any, handler: any) {
-        
-        // 记录工具注册信息
-        debug(`注册工具: ${toolName}`, { 
+        // If the tool should not be registered in the current mode, do not register and return undefined
+        if (!shouldRegisterTool(toolName)) {
+            debug(`Cloud mode: skipping registration of incompatible tool: ${toolName}`);
+            // Explicitly return undefined to satisfy the expected type
+            return undefined as any;
+        }
+
+        // Log tool registration info
+        debug(`Registering tool: ${toolName}`, { 
             toolConfig
         });
 
-        // 使用包装后的处理函数，传递服务器配置
-        const wrappedHandler = createWrappedHandler(toolName, handler, (server as any).cloudBaseOptions);
-        
-        // 调用原始 registerTool 方法
+        // Use the wrapped handler, passing the server instance
+        const wrappedHandler = createWrappedHandler(toolName, handler, server as ExtendedMcpServer);
+
+        // Call the original registerTool method
         return originalRegisterTool(toolName, toolConfig, wrappedHandler);
     };
 }
