@@ -338,6 +338,42 @@ CloudBase AI ToolKit 与微信开发者工具可以完美配合使用，提供�
 
 ### 🔥 微信交流群
 
+## 🎯 工作流命令
+
+### `/spec` 命令在 Claude Code 中不工作怎么办？
+
+由于 Claude Code 的内置斜杠命令系统与我们之前的 `/spec` 命令冲突，我们已经实现了新的混合命令系统：
+
+#### 新的命令方式
+
+**Claude Code:**
+- 使用项目命令：在 `.claude/commands/` 目录中可用
+- 仍可使用 `/spec`, `/no_spec`, `/help` 斜杠命令
+
+**其他 AI IDE:**
+- 使用触发词：`@spec`, `@no-spec`, `@workflow-help`
+- 智能检测：不指定命令时 AI 自动判断
+
+#### 命令对照表
+
+| 功能 | Claude Code | 其他 IDE |
+|------|-------------|----------|
+| 强制使用 Spec 工作流 | `/spec` | `@spec` |
+| 跳过 Spec 直接执行 | `/no_spec` | `@no-spec` |
+| 显示帮助信息 | `/help` | `@workflow-help` |
+
+#### 智能检测
+
+如果不指定命令，AI 会根据任务复杂度自动选择：
+- **复杂任务**（新功能开发、架构设计等）→ 自动使用 Spec 工作流
+- **简单任务**（修复、文档更新等）→ 自动跳过 Spec 工作流
+
+#### 详细文档
+
+完整的命令说明和使用示例请参考：
+- 项目内 `.claude/commands/README.md`
+- 迁移指南 `.claude/commands/MIGRATION.md`
+
 <div align="center">
 <img src="https://7463-tcb-advanced-a656fc-1257967285.tcb.qcloud.la/mcp/toolkit-qrcode.png" width="200" alt="微信群二维码"/>
 <br/>

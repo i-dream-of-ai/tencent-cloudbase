@@ -65,9 +65,14 @@ alwaysApply: true
 
 **可用命令：**
 - **默认** - AI 根据任务复杂度智能判断
-- **/spec** - 强制使用完整 spec 流程
-- **/no_spec** - 跳过 spec 流程，直接执行
-- **/help** - 显示命令帮助
+- **/spec** 或 **@spec** - 强制使用完整 spec 流程
+- **/no_spec** 或 **@no-spec** - 跳过 spec 流程，直接执行
+- **/help** 或 **@workflow-help** - 显示命令帮助
+
+**兼容性说明：**
+- **Claude Code**：使用 `/spec`, `/no_spec`, `/help` 或通过 `.claude/commands/` 项目命令
+- **其他 AI IDE**：使用 `@spec`, `@no-spec`, `@workflow-help` 触发词
+- **智能检测**：不指定命令时，AI 自动根据任务复杂度判断
 
 **智能判断标准：**
 - **使用 spec**：新功能开发、复杂架构设计、多模块集成、涉及数据库/UI设计

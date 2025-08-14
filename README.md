@@ -46,13 +46,13 @@ When coding in **Cursor/VSCode GitHub Copilot/WinSurf/CodeBuddy/Augment Code/Cla
 - **⚡ Lightning Fast** - Domestic CDN acceleration, faster access than overseas platforms
 - **📚 Knowledge Retrieval** - Built-in intelligent vector search for CloudBase and WeChat Mini-Program professional knowledge bases
 
-- **🎯 Flexible Workflow** - Support for /spec and /no_spec commands, intelligently choose development mode based on task complexity
+- **🎯 Flexible Workflow** - Support for `/spec`/`@spec` and `/no_spec`/`@no-spec` commands, works across all AI IDEs including Claude Code
 
 > [!TIP]
 > 
 > 🚩 Built-in Spec Workflow: Make AI programming more engineering-oriented
 > 
-> - Built-in Kiro-style Spec workflow, supports Cursor, Claude Code, and other mainstream AI IDEs
+> - Built-in Kiro-style Spec workflow, supports Cursor, Claude Code, and other mainstream AI IDEs with hybrid command system
 > - Clear requirements, design, and tasks, auto-generates requirements.md, design.md, tasks.md
 > - Move beyond "slot machine" vibe coding, development process is controllable and traceable
 > - Let AI assist in sorting out requirements, design solutions, and task breakdowns, while humans focus on decision-making and review
