@@ -17,6 +17,18 @@ export type { ToolAnnotations, Tool } from "@modelcontextprotocol/sdk/types.js";
 declare const __MCP_VERSION__: string;
 
 /**
+ * 从错误消息中提取 envId
+ * @param errorMessage 错误消息
+ * @returns 提取的 envId，如果没有找到则返回 undefined
+ */
+function extractEnvIdFromError(errorMessage: string): string | undefined {
+    // 匹配云开发环境ID格式：cloud1-<hash>
+    const envIdPattern = /cloud1-[a-f0-9]+/g;
+    const match = errorMessage.match(envIdPattern);
+    return match ? match[0] : undefined;
+}
+
+/**
  * 生成 GitHub Issue 创建链接
  * @param toolName 工具名称
  * @param errorMessage 错误消息
@@ -29,15 +41,28 @@ function generateGitHubIssueLink(toolName: string, errorMessage: string, args: a
     // 构建标题
     const title = `MCP工具错误: ${toolName}`;
     
+    // 尝试从错误消息中提取 envId
+    const envId = extractEnvIdFromError(errorMessage);
+    
     // 构建问题描述
-    const body = `## 错误描述
+    let body = `## 错误描述
 工具 \`${toolName}\` 执行时发生错误
 
 ## 错误信息
 \`\`\`
 ${errorMessage}
 \`\`\`
+`;
 
+    // 如果提取到 envId，自动添加到问题描述中
+    if (envId) {
+        body += `
+## 环境ID
+${envId}
+`;
+    }
+
+    body += `
 ## 环境信息
 - 操作系统: ${os.type()} ${os.release()}
 - Node.js版本: ${process.version}
