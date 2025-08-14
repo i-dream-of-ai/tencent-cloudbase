@@ -1362,10 +1362,38 @@ export function registerDatabaseTools(server: ExtendedMcpServer) {
 
               // 尝试生成Mermaid图表
               let mermaidDiagram = null;
-              if (result.Data.Schema && jsonSchemaToMermaid) {
+              if (result.Data.Schema && jsonSchemaToMermaid && simplifiedSchema && !simplifiedSchema.error) {
                 try {
-                  const schema = JSON.parse(result.Data.Schema);
-                  mermaidDiagram = jsonSchemaToMermaid(schema);
+                  const mainSchema = JSON.parse(result.Data.Schema);
+                  const schemasMap: { [modelName: string]: any } = {
+                    [name]: mainSchema
+                  };
+                  
+                  // 获取关联模型的 schema
+                  if (simplifiedSchema.relations && simplifiedSchema.relations.length > 0) {
+                    const relatedModelNames = [...new Set(simplifiedSchema.relations.map((rel: any) => rel.targetModel))];
+                    
+                    for (const relatedModelName of relatedModelNames) {
+                      try {
+                        const relatedResult = await cloudbase.commonService('lowcode').call({
+                          Action: 'DescribeBasicDataSource',
+                          Param: {
+                            EnvId: currentEnvId,
+                            Name: relatedModelName
+                          }
+                        });
+                        
+                        if (relatedResult.Data && relatedResult.Data.Schema) {
+                          schemasMap[relatedModelName] = JSON.parse(relatedResult.Data.Schema);
+                        }
+                      } catch (e) {
+                        console.warn(`获取关联模型 ${relatedModelName} 的 schema 失败:`, e);
+                      }
+                    }
+                  }
+                  
+                  // 调用 jsonSchemaToMermaid，传入正确的参数格式
+                  mermaidDiagram = jsonSchemaToMermaid(schemasMap);
                 } catch (e) {
                   console.warn('生成Mermaid图表失败:', e);
                 }
