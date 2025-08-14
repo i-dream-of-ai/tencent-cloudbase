@@ -205,7 +205,7 @@ class Order {
 }`;
 
     const enumResult = transform.mermaidToJsonSchema(enumMermaid);
-    expect(enumResult.Order.properties.status.format).toBe('enum');
+    expect(enumResult.Order.properties.status.format).toBe('x-enum');
     console.log('    ✅ 枚举字段验证通过');
 
     console.log('✅ Mermaid 规则验证测试通过');

@@ -42,8 +42,8 @@ function createBackendSchemaParams(schema: any) {
   // 处理schema中的属性
   if (schema.properties) {
     Object.values(schema.properties).forEach((property: any) => {
-      if (property.format === 'enum') {
-        property.enum = undefined; // 不创建枚举，枚举太重了
+      if (property.format === 'x-enum') {
+        property.enum = undefined; // 不创建选项集，太重了
       }
 
       if (Array.isArray(property.default) && property.type !== 'array') {
