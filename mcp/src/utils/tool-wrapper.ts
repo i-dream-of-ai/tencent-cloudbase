@@ -3,6 +3,7 @@ import { ToolAnnotations, Tool } from "@modelcontextprotocol/sdk/types.js";
 import { reportToolCall } from './telemetry.js';
 import { debug } from './logger.js';
 import { CloudBaseOptions } from '../types.js';
+import { getEnvId } from '../cloudbase-manager.js';
 import os from 'os';
 
 /**
@@ -21,10 +22,26 @@ declare const __MCP_VERSION__: string;
  * @param toolName 工具名称
  * @param errorMessage 错误消息
  * @param args 工具参数
+ * @param cloudBaseOptions CloudBase 配置选项
  * @returns GitHub Issue 创建链接
  */
-function generateGitHubIssueLink(toolName: string, errorMessage: string, args: any): string {
+async function generateGitHubIssueLink(toolName: string, errorMessage: string, args: any, cloudBaseOptions?: CloudBaseOptions): Promise<string> {
     const baseUrl = 'https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/issues/new';
+    
+    // 尝试获取环境ID
+    let envIdSection = '';
+    try {
+        const envId = await getEnvId(cloudBaseOptions);
+        if (envId) {
+            envIdSection = `
+## 环境ID
+${envId}
+`;
+        }
+    } catch (error) {
+        // 如果获取 envId 失败，不添加环境ID部分
+        debug('无法获取环境ID:', error);
+    }
     
     // 构建标题
     const title = `MCP工具错误: ${toolName}`;
@@ -37,7 +54,7 @@ function generateGitHubIssueLink(toolName: string, errorMessage: string, args: a
 \`\`\`
 ${errorMessage}
 \`\`\`
-
+${envIdSection}
 ## 环境信息
 - 操作系统: ${os.type()} ${os.release()}
 - Node.js版本: ${process.version}
@@ -98,7 +115,7 @@ function createWrappedHandler(name: string, handler: any, cloudBaseOptions?: Clo
             });
 
             // 生成 GitHub Issue 创建链接
-            const issueLink = generateGitHubIssueLink(name, errorMessage, args);
+            const issueLink = await generateGitHubIssueLink(name, errorMessage, args, cloudBaseOptions);
             
             // 创建增强的错误消息，包含 GitHub Issue 链接
             const enhancedErrorMessage = `${errorMessage}\n\n🔗 遇到问题？请复制以下链接到浏览器打开\n即可自动携带错误详情快速创建 GitHub Issue：\n${issueLink}`;
