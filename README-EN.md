@@ -13,6 +13,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dw/%40cloudbase%2Fcloudbase-mcp)](https://www.npmjs.com/package/@cloudbase/cloudbase-mcp)
 [![GitHub stars](https://img.shields.io/github/stars/TencentCloudBase/CloudBase-AI-ToolKit?style=social&v=1)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/TencentCloudBase/CloudBase-AI-ToolKit?style=social&v=1)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/network/members)
+
 [![GitHub issues](https://img.shields.io/github/issues/TencentCloudBase/CloudBase-AI-ToolKit)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/TencentCloudBase/CloudBase-AI-ToolKit)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/pulls)
 [![GitHub last commit](https://img.shields.io/github/last-commit/TencentCloudBase/CloudBase-AI-ToolKit)](https://github.com/TencentCloudBase/CloudBase-AI-ToolKit/commits)
@@ -44,6 +45,8 @@ When coding in **Cursor/VSCode GitHub Copilot/WinSurf/CodeBuddy/Augment Code/Cla
 - **🔧 Smart Debugging** - AI automatically reviews logs and fixes issues, reducing operational costs
 - **⚡ Lightning Fast** - Domestic CDN acceleration, faster access than overseas platforms
 - **📚 Knowledge Retrieval** - Built-in intelligent vector search for CloudBase and WeChat Mini-Program professional knowledge bases
+- **🔄 Smart Upgrade** - Auto-detect version differences and provide upgrade guidance, ensuring users always use the latest features
+- **🎯 Flexible Workflow** - Support for /spec and /no_spec commands, intelligently choose development mode based on task complexity
 
 > [!TIP]
 > 
@@ -53,6 +56,7 @@ When coding in **Cursor/VSCode GitHub Copilot/WinSurf/CodeBuddy/Augment Code/Cla
 > - Clear requirements, design, and tasks, auto-generates requirements.md, design.md, tasks.md
 > - Move beyond "slot machine" vibe coding, development process is controllable and traceable
 > - Let AI assist in sorting out requirements, design solutions, and task breakdowns, while humans focus on decision-making and review
+- **Spec workflow is built into CloudBase AI rules**, download the latest template or let AI download CloudBase AI rules in the current project to get it
 
 ---
 🚩 **Get Started with CloudBase AI ToolKit**
@@ -77,6 +81,15 @@ In the AI chat box, enter:
 ```
 Download mini-program cloud development template
 ```
+
+If you only want to download specific IDE config files to avoid project file confusion, you can specify the IDE type:
+```
+Download mini-program cloud development template, only include Cursor config
+Download React cloud development template, only include WindSurf config
+Download universal cloud development template, only include Claude Code config
+```
+
+Supported IDE types: cursor, windsurf, codebuddy, claude-code, cline, gemini-cli, opencode, qwen-code, baidu-comate, openai-codex-cli, augment-code, github-copilot, roocode, tongyi-lingma, trae, vscode
 
 3. **Available Template Types**  
 - Mini-program cloud development template
@@ -165,6 +178,13 @@ Choose a template and initialize in one click:
 #### 🛠️ Enhance Existing Projects
 
 If you already have a project, after configuring MCP, just tell the AI "Download CloudBase AI rules in the current project" to automatically download and complete the AI editor rule configuration in your project directory.
+
+If you only want to download specific IDE config files to avoid project file confusion, you can specify the IDE type:
+```
+Download CloudBase AI rules in the current project, only include Cursor config
+Download CloudBase AI rules in the current project, only include WindSurf config
+Download CloudBase AI rules in the current project, only include Claude Code config
+```
 
 ### 2. Configure Your AI IDE
 
@@ -260,9 +280,14 @@ CloudBase MCP uses a plugin architecture. [See detailed docs](https://docs.cloud
 - [Develop a WeChat mini-game in 1 hour with CloudBase AI Toolkit](https://cloud.tencent.com/developer/article/2532595)
 - [AI Coding Power Combo: Cursor + Cloudbase-AI-Toolkit Game Dev](https://juejin.cn/post/7518783423277695028#comment)
 - [Launched a co-op Overcooked game in 2 days](https://mp.weixin.qq.com/s/nKfhHUf8w-EVKvA0u1rdeg)
+- [CloudBase AI Toolkit: Build a hospital intern scheduling system, goodbye painful excel tables](https://cloud.tencent.com/developer/article/2538023)
+- [No server, how to cloud deploy full-stack projects](https://cloud.tencent.com/developer/article/2537971)
+- [Quickly create a programmer's exclusive business card website](https://cloud.tencent.com/developer/article/2536273)
 
 #### 📱 Full-Stack Mini-Programs
 - [I built a "hot words" mini-program with CloudBase AI ToolKit in one day](https://cloud.tencent.com/developer/article/2537907)
+- [Use AI to create your exclusive "cloud library" mini-program!](https://cloud.tencent.com/developer/article/2535789)
+- [One person challenges full-stack development resume mini-program](https://cloud.tencent.com/developer/article/2535894)
 - [I used AI to develop and launch a mini-program: Worry Relief Box](https://mp.weixin.qq.com/s/DYekRheNQ2u8LAl_F830fA)
 - [From zero to full-stack dev in the AI era: Figma + Cursor + Cloudbase for WeChat mini-programs](https://mp.weixin.qq.com/s/nT2JsKnwBiup1imniCr2jA)
 
@@ -277,6 +302,8 @@ CloudBase MCP uses a plugin architecture. [See detailed docs](https://docs.cloud
 ### 🎥 Video Tutorials
 - [CloudBase: Use AI to develop an Overcooked game](https://www.bilibili.com/video/BV1v5KAzwEf9/)
 - [Software 3.0: Best AI Programming Partner CloudBase AI ToolKit, WeChat Mini-Program Example](https://www.bilibili.com/video/BV15gKdz1E5N/)
+- [Use AiCoding to challenge full-stack development resume mini-program](https://www.bilibili.com/video/BV1D23Nz1Ec3/)
+- [5 minutes to create a programmer's exclusive business card website locally](https://www.bilibili.com/video/BV19y3EzsEHQ/?vd_source=c8763f6ab9c7c6f7f760ad7ea9157011)
 
 ---
 
